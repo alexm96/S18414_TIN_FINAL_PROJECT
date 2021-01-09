@@ -1,0 +1,22 @@
+{
+  "name": "s18414_tin_final_project",
+  "version": "1.0.0",
+  "description": "<h1>Final project for TIN-Fauxlx </h1>\r <h2>Components</h2>\r * Front end (React)\r * Back end (Express)\r     * DB probably MySQL or Mongo (Haven't decided yet)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexm96/S18414_TIN_FINAL_PROJECT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexm96/S18414_TIN_FINAL_PROJECT/issues"
+  },
+  "homepage": "https://github.com/alexm96/S18414_TIN_FINAL_PROJECT#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
