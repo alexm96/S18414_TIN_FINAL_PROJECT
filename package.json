@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/alexm96/S18414_TIN_FINAL_PROJECT#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   }
 }
