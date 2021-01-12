@@ -1,5 +1,5 @@
 // registration page needs email, name , lastname, location details, password
-import React, { useState } from "react";
+import React, { useState }  from "react";
 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const GeneralInput = (props) => {
   return (
-    <Grid item xs={12} sm={6} >
+    <Grid item xs={12} sm={6}>
       <TextField
         className="input-field"
         type={props.type ? props.type : "text"}
@@ -59,22 +59,25 @@ const RegistrationPage = () => {
       password: "",
     };
   };
-
+  
   const [registrationFields, setRegistrationFields] = useState(
     generateEmptyFields()
   );
-  const [canSubmit,setCanSubmit]=useState(false)
+  const [canSubmit, setCanSubmit] = useState(false);
   const onUpdate = (event) => {
     const keyItem = event.target.name;
     const value = event.target.value;
     const newFormData = { ...registrationFields, [keyItem]: value };
-    if(newFormData["password"] && newFormData["password"]===newFormData["confirmPassword"] && event.target.reportValidity()){
-        setCanSubmit(true)
+    if (
+      newFormData["password"] &&
+      newFormData["password"] === newFormData["confirmPassword"] &&
+      event.target.reportValidity()
+    ) {
+      setCanSubmit(true);
+    } else {
+      setCanSubmit(false);
     }
-    else{
-        setCanSubmit(false)
-    }
-    
+
     setRegistrationFields(newFormData);
   };
   const onClick = (event) => {
@@ -148,11 +151,10 @@ const RegistrationPage = () => {
               fullWidth
               variant="contained"
               color="primary"
-              disabled={!canSubmit }
+              disabled={!canSubmit}
               className={classes.submit}
               onClick={onClick}
             >
-             
               Sign Up
             </Button>
           </Grid>
@@ -161,4 +163,4 @@ const RegistrationPage = () => {
     </Container>
   );
 };
-export { RegistrationPage,GeneralInput,useStyles };
+export { RegistrationPage, GeneralInput, useStyles };
