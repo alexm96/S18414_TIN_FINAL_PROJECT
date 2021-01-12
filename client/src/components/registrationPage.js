@@ -161,4 +161,4 @@ const RegistrationPage = () => {
     </Container>
   );
 };
-export { RegistrationPage };
+export { RegistrationPage,GeneralInput,useStyles };
