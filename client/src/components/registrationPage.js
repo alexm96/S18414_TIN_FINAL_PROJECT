@@ -1,11 +1,9 @@
 // registration page needs email, name , lastname, location details, password
-import React, { useState }  from "react";
-
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -59,31 +57,44 @@ const RegistrationPage = () => {
       password: "",
     };
   };
-  
+  const verifyData = (someFormData, target) => {
+    return (
+      someFormData["password"] &&
+      someFormData["password"] === someFormData["confirmPassword"] &&
+      target.reportValidity()
+    );
+  };
   const [registrationFields, setRegistrationFields] = useState(
     generateEmptyFields()
   );
   const [canSubmit, setCanSubmit] = useState(false);
   const onUpdate = (event) => {
+    const target = event.target;
     const keyItem = event.target.name;
     const value = event.target.value;
     const newFormData = { ...registrationFields, [keyItem]: value };
-    if (
-      newFormData["password"] &&
-      newFormData["password"] === newFormData["confirmPassword"] &&
-      event.target.reportValidity()
-    ) {
-      setCanSubmit(true);
-    } else {
-      setCanSubmit(false);
-    }
-
+    console.log(event.target.reportValidity());
+    setCanSubmit(verifyData(newFormData, target));
     setRegistrationFields(newFormData);
   };
-  const onClick = (event) => {
-    //post to endpoint here
+  const verifyFormValidity = () => {
+    // check if form is filled  
+for (const [key, value] of Object.entries(registrationFields)){
+    if(value===""){
+      return false
+    }
+}
+    return true;
+
+  };
+  const login = async (event) => {
+    //implement login here
     event.preventDefault();
-    console.log(registrationFields);
+    if (verifyFormValidity()) {
+      //login
+    } else {
+      alert("Please check that all form fields are filled in ");
+    }
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -153,7 +164,7 @@ const RegistrationPage = () => {
               color="primary"
               disabled={!canSubmit}
               className={classes.submit}
-              onClick={onClick}
+              onClick={login}
             >
               Sign Up
             </Button>
