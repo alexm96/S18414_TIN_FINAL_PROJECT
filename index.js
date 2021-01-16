@@ -1,11 +1,14 @@
 const express = require('express')
+const bodyparser=require('body-parser')
 const cors=require("cors")
 const app = express()
 app.use(cors())
 const port = 3000
 const users=require("./routes/user")
+const register=require("./routes/register")
 
 app.use("/users",users)
+app.use("/register",register)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

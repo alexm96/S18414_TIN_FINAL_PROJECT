@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import axios from "axios"
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -46,8 +47,8 @@ const RegistrationPage = () => {
   const classes = useStyles();
   const generateEmptyFields = () => {
     return {
-      f_name: "",
-      l_name: "",
+      first_name: "",
+      last_name: "",
       email: "",
       address_line1: "",
       address_line2: "",
@@ -68,6 +69,8 @@ const RegistrationPage = () => {
     generateEmptyFields()
   );
   const [canSubmit, setCanSubmit] = useState(false);
+  const [isLoading,setLoading]=useState(false)
+  const [creationResponse,setCreationResponse]=useState("")
   const onUpdate = (event) => {
     const target = event.target;
     const keyItem = event.target.name;
@@ -76,6 +79,7 @@ const RegistrationPage = () => {
     console.log(event.target.reportValidity());
     setCanSubmit(verifyData(newFormData, target));
     setRegistrationFields(newFormData);
+
   };
   const verifyFormValidity = () => {
     // check if form is filled  
@@ -83,15 +87,22 @@ for (const [key, value] of Object.entries(registrationFields)){
     if(value===""){
       return false
     }
-}
+}   
     return true;
 
   };
   const login = async (event) => {
-    //implement login here
     event.preventDefault();
+    const fieldsToSend={...registrationFields,...{"confirmPassword":undefined}} // no reason to send the password twice 
     if (verifyFormValidity()) {
-      //login
+      setLoading(true)
+      await axios.post("/register",fieldsToSend)
+      .then(res => {
+        console.log(res["data"])
+        setLoading(false)
+        setCreationResponse(res.data)
+        
+      })
     } else {
       alert("Please check that all form fields are filled in ");
     }
@@ -106,12 +117,12 @@ for (const [key, value] of Object.entries(registrationFields)){
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <GeneralInput
-              name="f_name"
+              name="first_name"
               placeholder="Your first name"
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
-              name="l_name"
+              name="last_name"
               placeholder="Your last name"
               updateFunction={onUpdate}
             ></GeneralInput>
@@ -168,8 +179,11 @@ for (const [key, value] of Object.entries(registrationFields)){
             >
               Sign Up
             </Button>
+            
           </Grid>
         </form>
+        <p hidden={!isLoading}> Loading </p>
+        <p>{creationResponse} </p>
       </div>
     </Container>
   );
