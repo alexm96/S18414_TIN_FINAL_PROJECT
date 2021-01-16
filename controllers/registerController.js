@@ -1,13 +1,15 @@
 const mysql = require('mysql2/promise');
 const mysqlConnection = require("../secrets.json").mysqlConnection;
+const hashPass=require("../utils/hasher").hashpassword
 const user = require("../models/user").User;
+const nodeEmoji=require("node-emoji")
 exports.registerUser = async (req, res) => {
   let newUser = new user(req.body);
   const connection = await mysql.createConnection(mysqlConnection);
   
   const valueOFExists=await checkEmail(newUser.email);
   if(!valueOFExists){
-           console.log(valueExists)
+            const newPass=await hashPass(newUser.password)
             let query =
             "insert into sample_db.user (first_name,last_name,email,address_line1,address_line2,country,postal_code,password,city,tier_id) values(?,?,?,?,?,?,?,?,?,?)";
             connection.query(
@@ -20,8 +22,8 @@ exports.registerUser = async (req, res) => {
               newUser.location.address_line2,
               newUser.location.country,
               newUser.location.postal_code,
-              newUser.password,
-              newUser.location.postal_code,
+              newPass,
+              newUser.location.city,
               1,
             ],
             (err, rows, fields) => {
@@ -32,17 +34,12 @@ exports.registerUser = async (req, res) => {
             }
           );
           connection.end();
-          res.sendStatus(200);
+          res.send(`Sign up successful, congrats! Please login now ${nodeEmoji.get("muscle")}`.toString());
    }
 else{
     res.send(`${newUser.email} already in system`)
 }}
         
-    
-
-      
-    
-  
 
 const  checkEmail= async (emailToCheck)=>{
     const connection = await mysql.createConnection(mysqlConnection);

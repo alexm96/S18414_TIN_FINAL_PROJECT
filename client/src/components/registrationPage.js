@@ -100,7 +100,7 @@ for (const [key, value] of Object.entries(registrationFields)){
       .then(res => {
         console.log(res["data"])
         setLoading(false)
-        setCreationResponse(res.data)
+        setCreationResponse(res["data"])
         
       })
     } else {
