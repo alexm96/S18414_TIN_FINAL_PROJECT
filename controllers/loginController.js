@@ -4,10 +4,14 @@ const comparePassword = require("../utils/hasher").comparePassword;
 const user = require("../models/user").User;
 const nodeEmoji = require("node-emoji");
 exports.loginUser = async (req, res) => {
+    const connection = await mysql.createConnection(mysqlConnection);
+    try {
+        
+    
   const email = req.body.email;
   const password = req.body.password;
-  const connection = await mysql.createConnection(mysqlConnection);
-  const results=await connection.query(
+  
+  const [rows,fields]=await connection.query(
     'SELECT password FROM `user` WHERE `email` = ? ',
     [email],(err,res)=>{
         if(err){
@@ -15,8 +19,7 @@ exports.loginUser = async (req, res) => {
         }
     }
   );
-      userRow=results[0][0]
-      
+      userRow=rows[0]
       if(userRow){
           console.log()
         const passwordsMatch=await comparePassword(userRow.password,password)
@@ -32,7 +35,12 @@ exports.loginUser = async (req, res) => {
    else{
        res.send("User doesn't exist")
    }
-  
+} catch (error) {
+        console.log(error)
+}
+finally{
+    connection.close()
+}
  
  
 };
