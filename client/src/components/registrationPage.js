@@ -76,7 +76,6 @@ const RegistrationPage = () => {
     const keyItem = event.target.name;
     const value = event.target.value;
     const newFormData = { ...registrationFields, [keyItem]: value };
-    console.log(event.target.reportValidity());
     setCanSubmit(verifyData(newFormData, target));
     setRegistrationFields(newFormData);
 
@@ -114,7 +113,7 @@ for (const [key, value] of Object.entries(registrationFields)){
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate >
           <Grid container spacing={2}>
             <GeneralInput
               name="first_name"

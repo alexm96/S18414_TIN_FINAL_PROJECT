@@ -6,9 +6,10 @@ app.use(cors())
 const port = 3000
 const users=require("./routes/user")
 const register=require("./routes/register")
-
+const login=require("./routes/login")
 app.use("/users",users)
 app.use("/register",register)
+app.use("/login",login)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

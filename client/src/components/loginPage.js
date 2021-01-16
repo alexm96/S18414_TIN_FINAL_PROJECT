@@ -1,12 +1,12 @@
 import { GeneralInput, useStyles } from "./registrationPage";
 import React, { useState } from "react";
-
+import {validateEmail} from "../utils"
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import axios from "axios"
 const LoginPage = () => {
   const classes = useStyles();
   const generateEmptyFields = () => {
@@ -18,18 +18,30 @@ const LoginPage = () => {
 
   const [loginFields, setLoginFields] = useState(generateEmptyFields());
   const [canSubmit, setCanSubmit] = useState(false);
+
+  const [loading,setLoading]=useState()
+  const [loginResponse,setLoginResponse]=useState("")
   const onUpdate = (event) => {
     const keyItem = event.target.name;
     const value = event.target.value;
     const newFormData = { ...loginFields, [keyItem]: value };
-    setCanSubmit(event.target.reportValidity() && newFormData["password"]);
+    setCanSubmit (newFormData["password"] && validateEmail(newFormData["email"]) && event.target.reportValidity());
     setLoginFields(newFormData);
   };
-  const onClick = (event) => {
+  const checkValidityAllFields=(event)=>{
+    event.target.reportValidity()
+  }
+  const  onClick = async (event) => {
     //post to endpoint here
-    event.preventDefault();
-    console.log(loginFields);
-  };
+      event.preventDefault()
+      setLoading(true)
+      await  axios.post("/login",loginFields)
+      .then(res => {
+        setLoginResponse(res["data"])
+        setLoading(false) 
+      })  
+    } 
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -37,7 +49,7 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onChange={checkValidityAllFields}>
           <Grid container spacing={2}>
             <GeneralInput
               name="email"
@@ -45,7 +57,6 @@ const LoginPage = () => {
               type="email"
               updateFunction={onUpdate}
             ></GeneralInput>
-
             <GeneralInput
               name="password"
               placeholder="password"
@@ -64,6 +75,8 @@ const LoginPage = () => {
             </Button>
           </Grid>
         </form>
+        <p id="loading-bar" hidden={!loading}>Logging you in</p>
+        <p hidden={!loginResponse}>{loginResponse}</p>
       </div>
     </Container>
   );

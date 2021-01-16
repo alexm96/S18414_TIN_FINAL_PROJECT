@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 const mysqlConnection = require("../secrets.json").mysqlConnection;
-const hashPass=require("../utils/hasher").hashpassword
+const hashPass=require("../utils/hasher").hashPassword
 const user = require("../models/user").User;
 const nodeEmoji=require("node-emoji")
 exports.registerUser = async (req, res) => {
@@ -37,6 +37,7 @@ exports.registerUser = async (req, res) => {
           res.send(`Sign up successful, congrats! Please login now ${nodeEmoji.get("muscle")}`.toString());
    }
 else{
+  connection.end();
     res.send(`${newUser.email} already in system`)
 }}
         
