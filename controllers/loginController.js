@@ -6,11 +6,8 @@ const nodeEmoji = require("node-emoji");
 exports.loginUser = async (req, res) => {
     const connection = await mysql.createConnection(mysqlConnection);
     try {
-        
-    
   const email = req.body.email;
   const password = req.body.password;
-  
   const [rows,fields]=await connection.query(
     'SELECT password FROM `user` WHERE `email` = ? ',
     [email],(err,res)=>{
@@ -21,9 +18,7 @@ exports.loginUser = async (req, res) => {
   );
       userRow=rows[0]
       if(userRow){
-          console.log()
         const passwordsMatch=await comparePassword(userRow.password,password)
-        console.log(passwordsMatch)
         if(passwordsMatch){
             res.send("success")
         }
