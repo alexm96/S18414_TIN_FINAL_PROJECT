@@ -61,6 +61,7 @@ const LoginPage = () => {
               name="password"
               placeholder="password"
               updateFunction={onUpdate}
+              type="password"
             ></GeneralInput>
             <Button
               type="submit"

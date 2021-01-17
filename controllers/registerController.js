@@ -33,11 +33,13 @@ exports.registerUser = async (req, res) => {
         createdAndUpdatedAt
         
       ]
-    ).then((row,field)=>{
+    ).then(([row,field])=>{
+      
       res.send(
         `Sign up successful, congrats! Please login now ${nodeEmoji.get(
           "muscle"
         )}`.toString());
+        
     }).catch((err)=>{
       console.log(err)
       res.send(
