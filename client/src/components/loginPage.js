@@ -6,8 +6,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import axios from "axios"
-const LoginPage = () => {
+import {startLogin,login} from "../actions/auth";
+import {connect} from "react-redux";
+
+const LoginPage = ({getJwt,loginDispatch}) => {
   const classes = useStyles();
   const generateEmptyFields = () => {
     return {
@@ -18,7 +20,6 @@ const LoginPage = () => {
 
   const [loginFields, setLoginFields] = useState(generateEmptyFields());
   const [canSubmit, setCanSubmit] = useState(false);
-  const [jwtToken,setJwtToken]=useState("")
   const [loading,setLoading]=useState()
   const [loginResponse,setLoginResponse]=useState("")
   const onUpdate = (event) => {
@@ -35,14 +36,11 @@ const LoginPage = () => {
     //post to endpoint here
       event.preventDefault()
       setLoading(true)
-      await  axios.post("/login",loginFields)
-      .then(res => {
+      const result =await startLogin(loginFields)
+      setLoginResponse(result["data"]["message"])
+      setLoading(false)
+      loginDispatch(result.headers["jwt"])
 
-        setLoginResponse(res["data"]["message"])
-        setJwtToken(res.headers["jwt"]) // set this globally
-        // figure out best way to set jwt client side here
-        setLoading(false) 
-      })  
     } 
   
   return (
@@ -77,7 +75,10 @@ const LoginPage = () => {
             >
               Login
             </Button>
-
+        <button onClick={(event)=>{
+          event.preventDefault()
+          console.log(getJwt)
+        }}></button>
           </Grid>
         </form>
         <p id="loading-bar" hidden={!loading}>Logging you in</p>
@@ -86,4 +87,12 @@ const LoginPage = () => {
     </Container>
   );
 };
-export { LoginPage };
+const mapDispatchToProps=(dispatch)=>({
+  startLogin:(loginFields)=>dispatch(startLogin(loginFields)),
+  loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
+})
+const mapStateToProps=(state)=>({
+  getJwt:state
+
+})
+export default connect(mapStateToProps,mapDispatchToProps)(LoginPage);

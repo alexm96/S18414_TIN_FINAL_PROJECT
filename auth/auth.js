@@ -1,6 +1,5 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const loginUser=require("../controllers/loginController")
 const mysql = require("mysql2/promise");
 const mysqlConnection = require("../secrets.json").mysqlConnection;
 const mySecret=require("../secrets.json")["my-secret-key"]
@@ -53,7 +52,7 @@ passport.use(
     )
 );
 passport.use('jwt',new JwtStrategy(opts, function(jwt_payload, done) {
-    console.log(jwt_payload)
+
     return done(null, {"message":"hello world"});
 }));
 module.exports = function(passport){}
