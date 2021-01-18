@@ -18,7 +18,7 @@ const LoginPage = () => {
 
   const [loginFields, setLoginFields] = useState(generateEmptyFields());
   const [canSubmit, setCanSubmit] = useState(false);
-
+  const [jwtToken,setJwtToken]=useState("")
   const [loading,setLoading]=useState()
   const [loginResponse,setLoginResponse]=useState("")
   const onUpdate = (event) => {
@@ -37,7 +37,10 @@ const LoginPage = () => {
       setLoading(true)
       await  axios.post("/login",loginFields)
       .then(res => {
-        setLoginResponse(res["data"])
+
+        setLoginResponse(res["data"]["message"])
+        setJwtToken(res.headers["jwt"]) // set this globally
+        // figure out best way to set jwt client side here
         setLoading(false) 
       })  
     } 
@@ -74,6 +77,7 @@ const LoginPage = () => {
             >
               Login
             </Button>
+
           </Grid>
         </form>
         <p id="loading-bar" hidden={!loading}>Logging you in</p>

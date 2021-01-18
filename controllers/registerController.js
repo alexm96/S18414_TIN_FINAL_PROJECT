@@ -34,7 +34,7 @@ exports.registerUser = async (req, res) => {
         
       ]
     ).then(([row,field])=>{
-      
+
       res.send(
         `Sign up successful, congrats! Please login now ${nodeEmoji.get(
           "muscle"

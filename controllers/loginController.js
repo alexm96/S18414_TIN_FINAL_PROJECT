@@ -1,8 +1,6 @@
 const mysql = require("mysql2/promise");
 const mysqlConnection = require("../secrets.json").mysqlConnection;
 const comparePassword = require("../utils/hasher").comparePassword;
-const user = require("../models/user").User;
-const nodeEmoji = require("node-emoji");
 exports.loginUser = async (req, res) => {
     const connection = await mysql.createConnection(mysqlConnection);
     try {
