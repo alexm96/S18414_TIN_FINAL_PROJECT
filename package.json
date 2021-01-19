@@ -4,7 +4,8 @@
   "description": "<h1>Final project for TIN-Fauxlx </h1>\r <h2>Components</h2>\r * Front end (React)\r * Back end (Express)\r     * DB probably MySQL or Mongo (Haven't decided yet)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,17 @@
   },
   "homepage": "https://github.com/alexm96/S18414_TIN_FINAL_PROJECT#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "helmet": "^4.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "nanoid": "^3.1.20",
+    "node-emoji": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }
