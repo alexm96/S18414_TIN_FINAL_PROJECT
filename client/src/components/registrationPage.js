@@ -58,7 +58,7 @@ for (const [key, value] of Object.entries(registrationFields)){
     return true;
 
   };
-  const login = async (event) => {
+  const register = async (event) => {
     event.preventDefault();
     const fieldsToSend={...registrationFields,...{"confirmPassword":undefined}} // no reason to send the password twice 
     if (verifyFormValidity()) {
@@ -142,11 +142,11 @@ for (const [key, value] of Object.entries(registrationFields)){
               color="primary"
               disabled={!canSubmit}
               className={classes.submit}
-              onClick={login}
+              onClick={register}
             >
               Sign Up
             </Button>
-            <p>hello {getJwt}</p>
+
           </Grid>
         </form>
         <p hidden={!isLoading}> Loading </p>
