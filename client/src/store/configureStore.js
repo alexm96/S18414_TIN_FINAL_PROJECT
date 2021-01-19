@@ -4,5 +4,8 @@ import auth from "../reducers/auth"
 const someComposer=window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose ;
 export default ()=>{
     const store=createStore(combineReducers({auth}),someComposer(applyMiddleware(thunk)))
+    store.subscribe(()=>{
+        console.log("state"+store.getState())
+    })
     return store;
 }

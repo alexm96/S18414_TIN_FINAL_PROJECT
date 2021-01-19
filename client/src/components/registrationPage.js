@@ -2,48 +2,16 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios"
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-const GeneralInput = (props) => {
-  return (
-    <Grid item xs={12} sm={6}>
-      <TextField
-        className="input-field"
-        type={props.type ? props.type : "text"}
-        name={props.name}
-        placeholder={props.placeholder}
-        variant="outlined"
-        required
-        fullWidth
-        onChange={props.updateFunction}
-      ></TextField>
-    </Grid>
-  );
-};
-const RegistrationPage = () => {
+import {GeneralInput} from "./generalInput";
+import {connect} from "react-redux";
+import useStyles from "./generalStyles"
+
+const RegistrationPage = ({getJwt}) => {
+
   const classes = useStyles();
   const generateEmptyFields = () => {
     return {
@@ -178,7 +146,7 @@ for (const [key, value] of Object.entries(registrationFields)){
             >
               Sign Up
             </Button>
-            
+            <p>hello {getJwt}</p>
           </Grid>
         </form>
         <p hidden={!isLoading}> Loading </p>
@@ -187,4 +155,10 @@ for (const [key, value] of Object.entries(registrationFields)){
     </Container>
   );
 };
-export { RegistrationPage, GeneralInput, useStyles };
+const mapStateToProps=(state)=>({
+  getJwt:state.auth.jwt
+})
+
+export default connect(mapStateToProps)(RegistrationPage);
+
+

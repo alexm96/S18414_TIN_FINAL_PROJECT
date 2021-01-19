@@ -1,12 +1,9 @@
 export default (state={},action)=>{
     switch(action.type){
         case "LOGIN":
-
-            return {jwt:action.jwt_token}
-            break;
+            return {...state,jwt:action.jwt_token}
         case "LOGOUT":
             return {}
-            break;
         default:
             return state
     }

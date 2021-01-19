@@ -1,4 +1,4 @@
-import { GeneralInput, useStyles } from "./registrationPage";
+import useStyles from "./generalStyles"
 import React, { useState } from "react";
 import {validateEmail} from "../utils"
 import Button from "@material-ui/core/Button";
@@ -8,8 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import {startLogin,login} from "../actions/auth";
 import {connect} from "react-redux";
-
-const LoginPage = ({getJwt,loginDispatch}) => {
+import {GeneralInput} from "./generalInput";
+const LoginPage = ({getJwt,loginDispatch,history}) => {
   const classes = useStyles();
   const generateEmptyFields = () => {
     return {
@@ -40,7 +40,7 @@ const LoginPage = ({getJwt,loginDispatch}) => {
       setLoginResponse(result["data"]["message"])
       setLoading(false)
       loginDispatch(result.headers["jwt"])
-
+    history.push("/")
     } 
   
   return (
@@ -92,7 +92,6 @@ const mapDispatchToProps=(dispatch)=>({
   loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
 })
 const mapStateToProps=(state)=>({
-  getJwt:state
-
+  getJwt:state.auth.jwt
 })
 export default connect(mapStateToProps,mapDispatchToProps)(LoginPage);
