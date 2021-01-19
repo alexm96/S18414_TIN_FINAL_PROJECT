@@ -8,7 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import {connect} from "react-redux";
 import { logout} from "../actions/auth";
+import {checkLoginStatus} from "../actions/header";
 import {withRouter} from 'react-router'
+import {Container} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,25 +22,33 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    boldText:{
+        fontWeight:"bold",
+        color:"black"
+    },
+    pointer:{
+
+    cursor:"pointer"
+    }
 }));
-const Header=({getLoggedIn,history,logoutDispatch})=>{
-    const [isLoggedIn,setLoggedIn]=useState(getLoggedIn)
+const Header=({checkLoginStatus,history,logoutDispatch})=>{
+    const [isLoggedIn,setLoggedIn]=useState(checkLoginStatus())
+    const sendMeHome=(event)=>{
+        event.preventDefault()
+        history.push("/")
+    }
     useEffect(() => {
         // sometimes login/logout works, this forces the component to re-render if it changes
-        setLoggedIn(getLoggedIn)
-    },[getLoggedIn]);
+        setLoggedIn(isLoggedIn)
+    },[checkLoginStatus()]);
     const classes = useStyles();
     return(
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={()=>{
-                        history.push("/")
-                    }}>
-                        <EuroSymbolIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Fauxlx
+
+                    <Typography variant="h6" className={classes.title} >
+                        <a onClick={sendMeHome} className={classes.pointer}><a className={classes.boldText} >Faux</a>lx</a>
                     </Typography>
                     <Button color="inherit" hidden={true} onClick={(event)=>{
                         event.preventDefault()
@@ -46,12 +56,12 @@ const Header=({getLoggedIn,history,logoutDispatch})=>{
                     }}>Register</Button>
                     <Button color="inherit" onClick={(event)=>{
                         event.preventDefault()
-                        if(!getLoggedIn){
+                        if(!checkLoginStatus()){
                             history.push("/login")
                         }else{
                             logoutDispatch()
                         }
-                    }}>{!isLoggedIn ? "Login" : "Logout"  }</Button>
+                    }}>{!checkLoginStatus() ? "Login" : "Logout"  }</Button>
                 </Toolbar>
             </AppBar>
         </div>
@@ -61,6 +71,7 @@ const mapStateToProps=(state)=>({
     getLoggedIn:state.auth.loggedIn
 })
 const mapDispatchToProps=(dispatch)=>({
-    logoutDispatch:()=>dispatch(logout())
+    logoutDispatch:()=>dispatch(logout()),
+    checkLoginStatus:()=>dispatch(checkLoginStatus())
 })
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Header));

@@ -39,8 +39,8 @@ const LoginPage = ({getJwt,loginDispatch,history}) => {
       const result =await startLogin(loginFields)
       setLoginResponse(result["data"]["message"])
       setLoading(false)
-      loginDispatch(result.headers["jwt"])
-    history.push("/")
+      const someResult = await loginDispatch(result.headers["jwt"])
+      history.push("/")
     } 
   
   return (
@@ -75,10 +75,7 @@ const LoginPage = ({getJwt,loginDispatch,history}) => {
             >
               Login
             </Button>
-        <button onClick={(event)=>{
-          event.preventDefault()
-          console.log(getJwt)
-        }}></button>
+
           </Grid>
         </form>
         <p id="loading-bar" hidden={!loading}>Logging you in</p>
@@ -89,7 +86,7 @@ const LoginPage = ({getJwt,loginDispatch,history}) => {
 };
 const mapDispatchToProps=(dispatch)=>({
   startLogin:(loginFields)=>dispatch(startLogin(loginFields)),
-  loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
+   loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
 })
 const mapStateToProps=(state)=>({
   getJwt:state.auth.jwt

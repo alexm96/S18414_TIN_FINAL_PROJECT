@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const login = (jwt_token) =>({
+export const login =  (jwt_token) =>({
     type: 'LOGIN',
     jwt_token
 });
