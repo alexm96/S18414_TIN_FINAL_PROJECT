@@ -10,6 +10,8 @@ import {GeneralInput} from "./generalInput";
 import {connect} from "react-redux";
 import useStyles from "./generalStyles"
 
+const phRegex= "\\+[0-9]+"
+
 const RegistrationPage = ({getJwt}) => {
 
   const classes = useStyles();
@@ -23,7 +25,7 @@ const RegistrationPage = ({getJwt}) => {
       country: "",
       postal_code: "",
       confirmPassword: "",
-      password: "",
+      password: ""
     };
   };
   const verifyData = (someFormData, target) => {
@@ -39,15 +41,19 @@ const RegistrationPage = ({getJwt}) => {
   const [canSubmit, setCanSubmit] = useState(false);
   const [isLoading,setLoading]=useState(false)
   const [creationResponse,setCreationResponse]=useState("")
+
+
   const onUpdate = (event) => {
     const target = event.target;
     const keyItem = event.target.name;
     const value = event.target.value;
+
     const newFormData = { ...registrationFields, [keyItem]: value };
     setCanSubmit(verifyData(newFormData, target));
     setRegistrationFields(newFormData);
 
   };
+
   const verifyFormValidity = () => {
     // check if form is filled  
 for (const [key, value] of Object.entries(registrationFields)){
@@ -99,6 +105,7 @@ for (const [key, value] of Object.entries(registrationFields)){
               type="email"
               updateFunction={onUpdate}
             ></GeneralInput>
+            <GeneralInput name="phonenumber" type ="tel" placeholder={"Phone number"} updateFunction={onUpdate} pattern={phRegex}></GeneralInput>
             <GeneralInput
               name="address_line1"
               placeholder="Address line 1"
@@ -124,6 +131,8 @@ for (const [key, value] of Object.entries(registrationFields)){
               placeholder="city"
               updateFunction={onUpdate}
             ></GeneralInput>
+            <Grid item xs={12} sm={6}>
+            </Grid>
             <GeneralInput
               name="password"
               placeholder="password"
