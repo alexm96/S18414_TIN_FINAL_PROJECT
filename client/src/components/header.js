@@ -33,16 +33,16 @@ const useStyles = makeStyles((theme) => ({
         display:"none"
     }
 }));
-const Header=({checkLoginStatus,history,logoutDispatch})=>{
-    const [isLoggedIn,setLoggedIn]=useState(checkLoginStatus())
+const Header=({getLoggedIn,history,logoutDispatch})=>{
+    const [isLoggedIn,setLoggedIn]=useState(getLoggedIn)
     const sendMeHome=(event)=>{
         event.preventDefault()
         history.push("/")
     }
     useEffect(() => {
         // sometimes login/logout works, this forces the component to re-render if it changes
-        setLoggedIn(isLoggedIn)
-    },[checkLoginStatus()]);
+        setLoggedIn(getLoggedIn)
+    },[getLoggedIn]);
     const classes = useStyles();
     return(
         <div className={classes.root}>
@@ -50,20 +50,20 @@ const Header=({checkLoginStatus,history,logoutDispatch})=>{
                 <Toolbar>
 
                     <Typography variant="h6" className={classes.title} >
-                        <a onClick={sendMeHome} className={classes.pointer}><a className={classes.boldText} >Faux</a>lx</a>
+                        <span onClick={sendMeHome} className={classes.pointer}><a className={classes.boldText} >Faux</a>lx</span>
                     </Typography>
-                    <Button color="inherit" className={checkLoginStatus() ? classes["should-be-hidden"] : ""} onClick={(event)=>{
+                    <Button color="inherit" className={getLoggedIn ? classes["should-be-hidden"] : ""} onClick={(event)=>{
                         event.preventDefault()
                         history.push("/register")
                     }}>Register</Button>
                     <Button color="inherit" onClick={(event)=>{
                         event.preventDefault()
-                        if(!checkLoginStatus()){
+                        if(!getLoggedIn){
                             history.push("/login")
                         }else{
                             logoutDispatch()
                         }
-                    }}>{!checkLoginStatus() ? "Login" : "Logout"  }</Button>
+                    }}>{!getLoggedIn ? "Login" : "Logout"  }</Button>
                 </Toolbar>
             </AppBar>
         </div>

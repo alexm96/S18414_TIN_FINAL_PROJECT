@@ -7,9 +7,7 @@ const jwt = require('jsonwebtoken');
 const secret=require("../secrets.json")["my-secret-key"]
 const test=require("../controllers/userController").get_specific_user
 router.use(bodyparser.json())
-const customCallback=(req,res,next)=>{
 
-}
 router.post("/",async (req,res,next)=> { // create new user (register)
    passport.authenticate(
        'login',
@@ -30,8 +28,9 @@ router.post("/",async (req,res,next)=> { // create new user (register)
                  async (error) => {
                     if (error) return next(error);
                     const body = {_id: user.id, email: user.email};
-                    const token = jwt.sign({user: body}, secret,{ expiresIn: '30m' });
-                    res.set("JWT",token)
+                    const token = jwt.sign({user: body}, secret,{ expiresIn: '8h' });
+                    res.set("JWT",token);
+                    console.log(token)
                     return res.json({...info});
                  }
              );
@@ -41,7 +40,6 @@ router.post("/",async (req,res,next)=> { // create new user (register)
        }
    )(req, res, next);
 });
-router.get('/test', passport.authenticate('jwt', { session: false }),customCallback
-);
+
 
 module.exports = router

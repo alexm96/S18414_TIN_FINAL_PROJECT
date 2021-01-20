@@ -34,6 +34,4 @@ exports.loginUser = async (req, res) => {
 finally{
     connection.close()
 }
- 
- 
 };
