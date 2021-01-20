@@ -53,6 +53,6 @@ passport.use(
 );
 passport.use('jwt',new JwtStrategy(opts, function(jwt_payload, done) {
 
-    return done(null, {"message":"hello world"});
+    return done(null, jwt_payload);
 }));
 module.exports = function(passport){}

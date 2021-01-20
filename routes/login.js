@@ -27,8 +27,8 @@ router.post("/",async (req,res,next)=> { // create new user (register)
                  {session: false},
                  async (error) => {
                     if (error) return next(error);
-                    const body = {_id: user.id, email: user.email};
-                    const token = jwt.sign({user: body}, secret,{ expiresIn: '8h' });
+
+                    const token = jwt.sign({_id: user.id, email: user.email}, secret,{ expiresIn: '8h' });
                     res.set("JWT",token);
                     console.log(token)
                     return res.json({...info});

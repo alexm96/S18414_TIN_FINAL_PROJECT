@@ -30,13 +30,14 @@ const CreateAd = ({getJwt}) => {
     const [isLoading,setLoading]=useState(false)
     const [creationResponse,setCreationResponse]=useState("")
     const serialize=()=>{
-        return {
-            "title":getTitle,
-            "category":getCategory,
-            "description":getDescription,
-            "price":getPrice,
-            "image":getImageData
-        }
+
+        let formData = new FormData()
+        formData.append('title', getTitle)
+        formData.append('category', getCategory)
+        formData.append('description', getDescription)
+        formData.append('price', getPrice.toString())
+        formData.append('image', getImageData, getImageData.name)
+        return formData
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -54,10 +55,10 @@ const CreateAd = ({getJwt}) => {
     const createAd = async (event) => {
        event.preventDefault();
        const adToSend=serialize();
-       const response = await axios.post("/advertisement",adToSend).then((data)=>{
-
+       const response = await axios.post("/advertisement",adToSend,{headers:{'Accept': 'application/json',"jwt":getJwt}}).then((data)=>{
+           return data
        }).catch((error)=>{
-           console.log(error)
+           console.log(error.response["message"])
        })
     };
     return (
@@ -92,7 +93,7 @@ const CreateAd = ({getJwt}) => {
                                 label="Select"
                                 value={getCategory}
                                 onChange={(event)=>{
-                                    console.log(event.target.value)
+
                                     setCategory(event.target.value)
 
                                 }}
@@ -146,9 +147,11 @@ const CreateAd = ({getJwt}) => {
                             id="raised-button-file"
                             multiple
                             type="file"
-                            onChange={(event => {
+                            onChange={ ( async event => {
                                 event.preventDefault()
                                 setImageData(event.target.files[0])
+
+
                             })}
                         />
                         <label htmlFor="raised-button-file">
