@@ -21,7 +21,7 @@ router.post("/",async (req,res,next)=> { // create new user (register)
                 return next(error);
              }
              else if (!user){
-                 return res.json(info)
+                 return res.status(403).send(info)
              }
 
              req.login(

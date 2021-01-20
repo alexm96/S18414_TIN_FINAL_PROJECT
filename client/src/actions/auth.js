@@ -13,6 +13,9 @@ export const  startLogin= async(loginFields)=>{
     const result=await  axios.post("/login",loginFields)
         .then(res => {
             return res;
+        }).catch((error)=>{
+            return error.response
         })
+    console.log(result)
     return result
 }
