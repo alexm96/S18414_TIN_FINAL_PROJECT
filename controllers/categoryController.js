@@ -4,13 +4,25 @@ exports.getAvailableCategories= getAvailableCategories=async ()=>{
     const connection = await mysql.createConnection(mysqlConnection);
     try {
         const [rows, fields] = await connection.query("select name from tag")
-        console.log(rows)
-        const cleanedRows=rows.map((row)=>{
+
+        return rows.map((row) => {
             return row["name"]
         })
-        return cleanedRows
     }
     catch (error){
         return ["Other"]
     }
     }
+exports.getCategoryId= getCategoryId=async (categoryName)=>{
+    const connection = await mysql.createConnection(mysqlConnection);
+    try {
+        const [rows, fields] = await connection.query("select id from tag where name=?",[categoryName])
+
+        return rows.map((row) => {
+            return row["id"]
+        })
+    }
+    catch (error){
+        return error
+    }
+}

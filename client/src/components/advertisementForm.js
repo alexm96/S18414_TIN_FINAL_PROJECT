@@ -30,7 +30,6 @@ const CreateAd = ({getJwt}) => {
     const [isLoading,setLoading]=useState(false)
     const [creationResponse,setCreationResponse]=useState("")
     const serialize=()=>{
-
         let formData = new FormData()
         formData.append('title', getTitle)
         formData.append('category', getCategory)
@@ -44,7 +43,6 @@ const CreateAd = ({getJwt}) => {
             const result = await axios.get(
                 '/tags',
             );
-
             setPossibleCategories(result.data);
         };
 
@@ -55,10 +53,15 @@ const CreateAd = ({getJwt}) => {
     const createAd = async (event) => {
        event.preventDefault();
        const adToSend=serialize();
-       const response = await axios.post("/advertisement",adToSend,{headers:{'Accept': 'application/json',"jwt":getJwt}}).then((data)=>{
-           return data
+       setLoading(true)
+       axios.post("/advertisement",adToSend,{headers:{'Accept': 'application/json',"jwt":getJwt}}).then((response)=>{
+           console.log("response")
+           setCreationResponse(response.data["message"])
        }).catch((error)=>{
-           console.log(error.response["message"])
+
+           setCreationResponse(error.response.data["message"])
+       }).finally(()=>{
+           setLoading(false)
        })
     };
     return (
@@ -139,26 +142,29 @@ const CreateAd = ({getJwt}) => {
                                 }}
                             ></TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12} >
+                        <Grid item xs={6} sm={6} >
                         <input
                             accept="image/*"
                             className={classes.input}
                             style={{ display: 'none' }}
                             id="raised-button-file"
-                            multiple
                             type="file"
                             onChange={ ( async event => {
                                 event.preventDefault()
                                 setImageData(event.target.files[0])
-
-
                             })}
+
                         />
                         <label htmlFor="raised-button-file">
-                            <Button variant="outlined" component="span" className={classes.button} >
+                            <Button  variant="outlined" component="span" className={classes.button} >
                                 Upload a picture
                             </Button>
                         </label>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                            <Typography component="p" >
+                                {getImageData ? getImageData.name : "No file uploaded"}
+                            </Typography>
                         </Grid>
                         <Button
                             type="submit"

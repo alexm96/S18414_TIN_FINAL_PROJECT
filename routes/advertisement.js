@@ -1,27 +1,33 @@
 const express = require('express')
 const router = express.Router()
-
+const Image = require("../models/image").Image
+const Advertisement=require("../models/advertisement").Advertisement
 const passport = require("passport");
-const multer = require("multer")
+
 const getAvailableAdvertisements = require("../controllers/advertisementController").getAvailableAdvertisements
-const  upload = multer({ dest: 'upload/'})
-const getUpload=upload.single("image")
+
 const nodeEmoji = require("node-emoji");
+const uploadFile = require("../utils/multerStorage");
+const {createAdvertisement} = require("../controllers/advertisementController");
 const checkCanMakeAd= (async (req,res,next)=>{
         const canMakePost=await getAvailableAdvertisements(req,res)
         if(canMakePost){
             next()
         }
         else{
-            res.sendStatus(429).send({"message":`You have posted too many ads this month ${nodeEmoji.get("frowning")}`})
+            res.status(429).send({"message":`You have posted too many ads this month ${nodeEmoji.get("frowning")}`})
         }
 })
-const customCallback= (async (req,res,next)=>{
-    console.log(req.file)
-    console.log(req.body)
-    res.json("ok")
+const createAdvert= (async (req,res)=>{
+    const newAdvert=new Advertisement(req.body)
+    console.log(newAdvert)
+    const newImage=new Image(req)
+    const result=createAdvertisement(newAdvert,req.user._id,newImage)
+    if(result){
+        res.json({"message":"success"})
+    }
 })
 
-router.post('/', passport.authenticate('jwt', { session: false }),getUpload,checkCanMakeAd,customCallback
+router.post('/', passport.authenticate('jwt', { session: false }),uploadFile.single("image"),checkCanMakeAd,createAdvert
 );
 module.exports = router
