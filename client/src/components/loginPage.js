@@ -1,5 +1,5 @@
 import useStyles from "./generalStyles"
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {validateEmail} from "../utils"
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,7 +9,7 @@ import Container from "@material-ui/core/Container";
 import {startLogin,login} from "../actions/auth";
 import {connect} from "react-redux";
 import {GeneralInput} from "./generalInput";
-const LoginPage = ({getJwt,loginDispatch,history}) => {
+const LoginPage = ({loginDispatch,history}) => {
   const classes = useStyles();
   const generateEmptyFields = () => {
     return {
@@ -20,8 +20,18 @@ const LoginPage = ({getJwt,loginDispatch,history}) => {
 
   const [loginFields, setLoginFields] = useState(generateEmptyFields());
   const [canSubmit, setCanSubmit] = useState(false);
-  const [loading,setLoading]=useState()
+  const [loading,setLoading]=useState(false)
   const [loginResponse,setLoginResponse]=useState("")
+  useEffect(()=>{
+    const readAndRedirect=()=>{
+      history.push("/")
+    }
+    if(loginResponse && loginResponse.status===200){
+      setTimeout(readAndRedirect,1000)
+    }
+
+
+  },[loginResponse])
   const onUpdate = (event) => {
     const keyItem = event.target.name;
     const value = event.target.value;
@@ -37,10 +47,12 @@ const LoginPage = ({getJwt,loginDispatch,history}) => {
       event.preventDefault()
       setLoading(true)
       const result =await startLogin(loginFields)
-      setLoginResponse(result["data"]["message"])
+      console.log(result)
+      setLoginResponse(result)
       setLoading(false)
-      loginDispatch(result.headers["jwt"])
-    history.push("/")
+
+      await loginDispatch(result.headers["jwt"])
+
     } 
   
   return (
@@ -75,21 +87,18 @@ const LoginPage = ({getJwt,loginDispatch,history}) => {
             >
               Login
             </Button>
-        <button onClick={(event)=>{
-          event.preventDefault()
-          console.log(getJwt)
-        }}></button>
+
           </Grid>
         </form>
         <p id="loading-bar" hidden={!loading}>Logging you in</p>
-        <p hidden={!loginResponse}>{loginResponse}</p>
+        <p hidden={!loginResponse}>{loginResponse?loginResponse["data"]["message"]:""}</p>
       </div>
     </Container>
   );
 };
 const mapDispatchToProps=(dispatch)=>({
   startLogin:(loginFields)=>dispatch(startLogin(loginFields)),
-  loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
+   loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
 })
 const mapStateToProps=(state)=>({
   getJwt:state.auth.jwt

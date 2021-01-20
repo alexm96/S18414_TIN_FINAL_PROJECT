@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import {connect} from "react-redux";
+import React from "react";
 
-const Home=({getJwt,history})=>{
+
+const Home=({history})=>{
     return(
-        <div>
-            Am I logged in ? {(getJwt!==undefined).toString()}
-        <button onClick={()=>{
-            history.push("login")
-        }}>Login!</button>
-        </div>
+        <div>Posts will be inserted here <button onClick={(event)=>{
+            event.preventDefault()
+            history.push("/newAdvert")
+        }}></button></div>
 
     )
 
 };
-const mapStateToProps=(state)=>({
-    getJwt:state.auth.jwt
-})
-export default connect(mapStateToProps)(Home);
+
+export default (Home);
+
+
