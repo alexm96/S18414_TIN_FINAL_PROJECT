@@ -27,8 +27,10 @@ const useStyles = makeStyles((theme) => ({
         color:"black"
     },
     pointer:{
-
     cursor:"pointer"
+    },
+    "should-be-hidden":{
+        display:"none"
     }
 }));
 const Header=({checkLoginStatus,history,logoutDispatch})=>{
@@ -50,7 +52,7 @@ const Header=({checkLoginStatus,history,logoutDispatch})=>{
                     <Typography variant="h6" className={classes.title} >
                         <a onClick={sendMeHome} className={classes.pointer}><a className={classes.boldText} >Faux</a>lx</a>
                     </Typography>
-                    <Button color="inherit" hidden={true} onClick={(event)=>{
+                    <Button color="inherit" className={checkLoginStatus() ? classes["should-be-hidden"] : ""} onClick={(event)=>{
                         event.preventDefault()
                         history.push("/register")
                     }}>Register</Button>
