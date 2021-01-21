@@ -46,7 +46,7 @@ passport.use(
                     return done(null, false, { message: 'User not found' });
                 }
             }catch (error) {
-                console.log(error)
+
                 return done(error);
         }}
     )

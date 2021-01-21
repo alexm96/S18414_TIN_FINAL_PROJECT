@@ -5,7 +5,7 @@ const loginUser=require("../controllers/loginController")
 const passport=require("passport")
 const jwt = require('jsonwebtoken');
 const secret=require("../secrets.json")["my-secret-key"]
-const test=require("../controllers/userController").get_specific_user
+
 router.use(bodyparser.json())
 
 router.post("/",async (req,res,next)=> { // create new user (register)
@@ -30,7 +30,7 @@ router.post("/",async (req,res,next)=> { // create new user (register)
 
                     const token = jwt.sign({_id: user.id, email: user.email}, secret,{ expiresIn: '8h' });
                     res.set("JWT",token);
-                    console.log(token)
+
                     return res.json({...info});
                  }
              );

@@ -17,7 +17,7 @@ app.use("/users",users)
 app.use("/register",register)
 app.use("/login",login)
 app.use("/tags",tag)
-app.use("/advertisement",advertisement)
+app.use("/post",advertisement)
 app.get('/', (req, res) => {
   console.log("hello world")
   res.send('Hello World!')
