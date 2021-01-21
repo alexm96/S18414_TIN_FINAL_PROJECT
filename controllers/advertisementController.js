@@ -15,7 +15,7 @@ exports.createAdvertisement=async(advertObject,userUid,imageData)=>{
     //set location data of advert to that of user and id to advert id
     // add entry to m2m table
     const connection = await mysql.createConnection(mysqlConnection)
-    const categoryId= await getSpecificCategory(advertObject.category)
+    const categoryId=advertObject.category;
     const uploadImage= await uploadMyOwnImage(imageData)
     const createdAndUpdatedAt = new Date(new Date().toUTCString());
     const newId = await generateId();

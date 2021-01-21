@@ -21,11 +21,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 const CreateAd = ({getJwt}) => {
     const classes = useStyles();
     const [getTitle,setTitle]=useState("")
-    const [getCategory,setCategory]=useState("")
+    const [getCategory,setCategory]=useState("14")
     const [getDescription,setDescription]=useState("")
     const [getImageData,setImageData]=useState(undefined)
     const [getPrice,setPrice]=useState(0.0)
-    const [getPossibleCategories,setPossibleCategories]=useState([])
+    const [getPossibleCategories,setPossibleCategories]=useState([{"id":"14","name":"Other"}]) // default value
     const [canSubmit, setCanSubmit] = useState(true);
     const [isLoading,setLoading]=useState(false)
     const [creationResponse,setCreationResponse]=useState("")
@@ -43,10 +43,12 @@ const CreateAd = ({getJwt}) => {
             const result = await axios.get(
                 '/tags',
             );
-            setPossibleCategories(result.data);
-        };
 
+            setPossibleCategories(result.data)
+
+        };
         fetchData();
+
 
     }, []);
    
@@ -96,16 +98,17 @@ const CreateAd = ({getJwt}) => {
                                 label="Select"
                                 value={getCategory}
                                 onChange={(event)=>{
-
                                     setCategory(event.target.value)
+
 
                                 }}
                                 helperText="Please select your category"
                                 variant="outlined"
                             >
                                 {getPossibleCategories.map((category) => (
-                                    <MenuItem key={category} value={category}>
-                                        {category}
+                                    <MenuItem key={category.id} value={category.id}>
+
+                                        {category.name}
                                     </MenuItem>
                                 ))}
                             </TextField>
