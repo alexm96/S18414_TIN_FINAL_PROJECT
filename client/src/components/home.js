@@ -5,7 +5,7 @@ const Home=({history})=>{
     return(
         <div>Posts will be inserted here <button onClick={(event)=>{
             event.preventDefault()
-            history.push("/newAdvert")
+            history.push("/createAd")
         }}></button></div>
 
     )

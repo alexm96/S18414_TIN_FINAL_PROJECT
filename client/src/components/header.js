@@ -56,6 +56,10 @@ const Header=({getLoggedIn,history,logoutDispatch})=>{
                         event.preventDefault()
                         history.push("/register")
                     }}>Register</Button>
+                    <Button color="inherit" className={!getLoggedIn ? classes["should-be-hidden"] : ""} onClick={(event)=>{
+                        event.preventDefault()
+                        history.push("/createAd")
+                    }}>Create new ad</Button>
                     <Button color="inherit" onClick={(event)=>{
                         event.preventDefault()
                         if(!getLoggedIn){
