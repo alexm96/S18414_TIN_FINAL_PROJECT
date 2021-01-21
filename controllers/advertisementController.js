@@ -16,12 +16,14 @@ exports.createAdvertisement = async (advertObject, userUid, imageData) => {
   //set location data of advert to that of user and id to advert id
   // add entry to m2m table
   const connection = await mysql.createConnection(mysqlConnection);
+
   const categoryId = advertObject.category;
   const uploadImage = await uploadMyOwnImage(imageData);
   const createdAndUpdatedAt = new Date(new Date().toUTCString());
   const newId = await generateId();
   if (categoryId && uploadImage) {
     try {
+      await connection.query("START TRANSACTION");
       const [
         insertRows,
         insertFields,
@@ -38,7 +40,6 @@ exports.createAdvertisement = async (advertObject, userUid, imageData) => {
           createdAndUpdatedAt,
         ]
       );
-      console.log(rows.insertId);
 
       const sql = connection.format(
         "insert into location (select ?,address_line1,address_line2,country,postal_code,city from user where id=?)",
@@ -54,7 +55,11 @@ exports.createAdvertisement = async (advertObject, userUid, imageData) => {
         "insert into user_advertisement (ad_id,user_id) values(?,?)",
         [newId, userUid]
       );
+
+      await connection.query("COMMIT");
+      return true;
     } catch (error) {
+      await connection.query("ROLLBACK");
       return undefined;
     } finally {
       connection.close();
@@ -77,7 +82,7 @@ exports.getAdvertisements = async (searchTerm, city) => {
     );
 
     const [rows, fields] = await connection.execute(queryString);
-    console.log(rows[0]);
+
     return rows.map((row) => {
       const adImage = new ImageFromDb(row);
       return new MiniAd(row, adImage);

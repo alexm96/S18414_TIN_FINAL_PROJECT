@@ -1,10 +1,10 @@
-export default (array=[],action)=>{
+export default (state=[],action)=>{
     switch(action.type){
         case "SEARCH":
-            let newArray=array.slice()
-            newArray.splice(action.index,1)
-            return newArray
+            return action.searchResult
+
+
         default:
-            return array
+            return state
     }
 }

@@ -6,9 +6,10 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import useStyles from "./generalStyles";
 
-import { getSearchItems, search } from "../actions/search";
+import {getSearchItems, search} from "../actions/search";
 
-const SearchBar = ({}) => {
+
+const SearchBar = ({searchDispatch}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCity, setSearchCity] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
@@ -27,7 +28,16 @@ const SearchBar = ({}) => {
     };
 
     const results = await getSearchItems(searchFields);
-    console.log(results);
+    if(results.status===200){
+      const cleanedResults=await results.data.map((aditem)=>{
+        aditem.image.blobData.type=aditem.image.type
+        return aditem
+      })
+
+      searchDispatch(cleanedResults)
+    }
+    else{
+      console.log(results.message)}
   };
   return (
     <div>
@@ -84,8 +94,9 @@ const SearchBar = ({}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getSearchItems: (searchFields) => dispatch(getSearchItems(searchFields)),
-  search: (searchResult) => dispatch(search(searchResult)),
+  searchDispatch:(searchResults)=>dispatch(search(searchResults))
 });
-
-export default connect(undefined, mapDispatchToProps)(SearchBar);
+const mapStateToProps=(state)=>({
+  getMiniAds:state.search
+})
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -6,9 +6,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import useStyles from "./generalStyles";
 import Grid from "@material-ui/core/Grid";
 import {connect} from "react-redux";
+import AdHolder from "./adHolder";
 
 const Home=({history})=>{
-    const [searchResults,setSearchResults] =useState([])
     const classes = useStyles();
     return(
         <div className={classes.paper}>
@@ -21,9 +21,7 @@ const Home=({history})=>{
             </Container>
 
             <Container id={"mini-container"}>
-                <Grid container spacing={3}>
-
-                </Grid>
+               <AdHolder/>
             </Container>
 
 
