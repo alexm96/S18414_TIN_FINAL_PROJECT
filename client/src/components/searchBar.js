@@ -29,6 +29,7 @@ const SearchBar = ({searchDispatch}) => {
 
     const results = await getSearchItems(searchFields);
     if(results.status===200){
+
       searchDispatch(results.data)
     }
     else{
