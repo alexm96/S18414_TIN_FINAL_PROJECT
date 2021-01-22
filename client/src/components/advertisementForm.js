@@ -56,8 +56,8 @@ const CreateAd = ({getJwt}) => {
        event.preventDefault();
        const adToSend=serialize();
        setLoading(true)
-       axios.post("/advertisement",adToSend,{headers:{'Accept': 'application/json',"jwt":getJwt}}).then((response)=>{
-           console.log("response")
+       axios.post("/post",adToSend,{headers:{'Accept': 'application/json',"jwt":getJwt}}).then((response)=>{
+
            setCreationResponse(response.data["message"])
        }).catch((error)=>{
 

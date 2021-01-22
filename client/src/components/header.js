@@ -11,6 +11,7 @@ import { logout} from "../actions/auth";
 import {checkLoginStatus} from "../actions/header";
 import {withRouter} from 'react-router'
 import {Container} from "@material-ui/core";
+import {search} from "../actions/search";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,10 +34,11 @@ const useStyles = makeStyles((theme) => ({
         display:"none"
     }
 }));
-const Header=({getLoggedIn,history,logoutDispatch})=>{
+const Header=({getLoggedIn,history,logoutDispatch,searchDispatch})=>{
     const [isLoggedIn,setLoggedIn]=useState(getLoggedIn)
     const sendMeHome=(event)=>{
         event.preventDefault()
+        searchDispatch([])
         history.push("/")
     }
     useEffect(() => {
@@ -48,7 +50,6 @@ const Header=({getLoggedIn,history,logoutDispatch})=>{
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-
                     <Typography variant="h6" className={classes.title} >
                         <span onClick={sendMeHome} className={classes.pointer}><a className={classes.boldText} >Faux</a>lx</span>
                     </Typography>
@@ -56,6 +57,10 @@ const Header=({getLoggedIn,history,logoutDispatch})=>{
                         event.preventDefault()
                         history.push("/register")
                     }}>Register</Button>
+                    <Button color="inherit" className={!getLoggedIn ? classes["should-be-hidden"] : ""} onClick={(event)=>{
+                        event.preventDefault()
+                        history.push("/createAd")
+                    }}>Create new ad</Button>
                     <Button color="inherit" onClick={(event)=>{
                         event.preventDefault()
                         if(!getLoggedIn){
@@ -74,6 +79,7 @@ const mapStateToProps=(state)=>({
 })
 const mapDispatchToProps=(dispatch)=>({
     logoutDispatch:()=>dispatch(logout()),
-    checkLoginStatus:()=>dispatch(checkLoginStatus())
+    checkLoginStatus:()=>dispatch(checkLoginStatus()),
+    searchDispatch:(fakeData)=>dispatch(search(fakeData))
 })
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Header));

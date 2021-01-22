@@ -15,10 +15,10 @@ const AppRouter=()=>(
         <div>
             <Header/>
             <Switch>
-                <Route path="/" component={CreateAd} exact={true} />
+                <Route path="/" component={Home} exact={true} />
             <Route path='/register' component={RegistrationPage} />
             <Route path='/login' component={LoginPage}/>
-
+            <ProtectedRoute path={"/createAd"} component={CreateAd}></ProtectedRoute>
             </Switch>
         </div>
          </Router>

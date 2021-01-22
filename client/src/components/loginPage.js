@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import {startLogin,login} from "../actions/auth";
 import {connect} from "react-redux";
 import {GeneralInput} from "./generalInput";
+
 const LoginPage = ({loginDispatch,history}) => {
   const classes = useStyles();
   const generateEmptyFields = () => {
@@ -50,13 +51,12 @@ const LoginPage = ({loginDispatch,history}) => {
       console.log(result)
       setLoginResponse(result)
       setLoading(false)
-
       await loginDispatch(result.headers["jwt"])
-
     } 
   
   return (
-    <Container component="main" maxWidth="xs">
+
+    <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
