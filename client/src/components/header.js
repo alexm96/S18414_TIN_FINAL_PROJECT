@@ -11,6 +11,7 @@ import { logout} from "../actions/auth";
 import {checkLoginStatus} from "../actions/header";
 import {withRouter} from 'react-router'
 import {Container} from "@material-ui/core";
+import {search} from "../actions/search";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,10 +34,11 @@ const useStyles = makeStyles((theme) => ({
         display:"none"
     }
 }));
-const Header=({getLoggedIn,history,logoutDispatch})=>{
+const Header=({getLoggedIn,history,logoutDispatch,searchDispatch})=>{
     const [isLoggedIn,setLoggedIn]=useState(getLoggedIn)
     const sendMeHome=(event)=>{
         event.preventDefault()
+        searchDispatch([])
         history.push("/")
     }
     useEffect(() => {
@@ -77,6 +79,7 @@ const mapStateToProps=(state)=>({
 })
 const mapDispatchToProps=(dispatch)=>({
     logoutDispatch:()=>dispatch(logout()),
-    checkLoginStatus:()=>dispatch(checkLoginStatus())
+    checkLoginStatus:()=>dispatch(checkLoginStatus()),
+    searchDispatch:(fakeData)=>dispatch(search(fakeData))
 })
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Header));

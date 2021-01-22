@@ -3,14 +3,14 @@ const fs = require("fs");
 const mysqlConnection = require("../secrets.json").mysqlConnection;
 const uploadMyOwnImage = async (someImage) => {
   const connection = await mysql.createConnection(mysqlConnection);
-  const fileBlob = await fs.readFileSync(someImage.data);
+
   try {
     const [
       rows,
       fields,
     ] = await connection.query(
-      "insert into image (type,name,data) values(?,?,?)",
-      [someImage.type, someImage.name, fileBlob]
+      "insert into image (type,name,filePath) values(?,?,?)",
+      [someImage.type, someImage.name, someImage.data]
     );
     return rows.insertId;
   } catch (error) {

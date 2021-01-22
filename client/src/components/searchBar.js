@@ -29,12 +29,7 @@ const SearchBar = ({searchDispatch}) => {
 
     const results = await getSearchItems(searchFields);
     if(results.status===200){
-      const cleanedResults=await results.data.map((aditem)=>{
-        aditem.image.blobData.type=aditem.image.type
-        return aditem
-      })
-
-      searchDispatch(cleanedResults)
+      searchDispatch(results.data)
     }
     else{
       console.log(results.message)}

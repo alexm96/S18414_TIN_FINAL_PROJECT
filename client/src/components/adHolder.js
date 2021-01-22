@@ -2,13 +2,14 @@ import useStyles from "./generalStyles";
 import Typography from "@material-ui/core/Typography";
 import {Container} from "@material-ui/core";
 import SearchBar from "./searchBar";
-import React from "react";
+import React, {useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import {connect} from "react-redux";
 import AdMini from "./adMini";
 
 
 const AdHolder=({history,getMiniAds})=>{
+
     const classes = useStyles();
     return(
         <div>
@@ -27,7 +28,7 @@ const AdHolder=({history,getMiniAds})=>{
 
             <Container id={"mini-container"}>
 
-                <Grid container spacing={3} >
+                <Grid container spacing={3}  >
                     {getMiniAds.map((miniAd,index)=>{
                         return <AdMini key={index} {...miniAd}></AdMini>
                     })}

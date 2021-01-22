@@ -35,7 +35,7 @@ const AdMini=(props)=>{
                 <Grid container spacing={2}>
                     <Grid item>
                         <ButtonBase className={classes.image} >
-                            <img className={classes.img} alt="complex" src={"https://cdn.shopify.com/s/files/1/1245/1481/products/600_HERO_WEB_FIRST.jpg?v=1597712912"} />
+                            <img className={classes.img} alt="complex" src={`images/?id=${props.image.name}`}/>
                         </ButtonBase>
                     </Grid>
                     <Grid item xs={12} sm container>
