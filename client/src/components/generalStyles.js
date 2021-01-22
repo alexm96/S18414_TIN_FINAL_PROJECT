@@ -2,10 +2,10 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        paddingTop: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
     },
     avatar: {
         margin: theme.spacing(1),
@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
             width: '25ch',
         },
     },
+    adTable:{
+        borderCollapse:"separate",
+        borderSpacing:"1em"
+    }
 
 }));
 export default useStyles

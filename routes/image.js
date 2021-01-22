@@ -19,7 +19,6 @@ router.get("/",async (req,res,next)=>{
         if(err){
             console.log(err)
             res.sendFile(path.join(options.root,"sample.jpg"))
-
         }
             else{
                 res.sendFile(filePath)

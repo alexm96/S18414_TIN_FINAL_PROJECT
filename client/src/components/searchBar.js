@@ -79,7 +79,7 @@ const SearchBar = ({searchDispatch}) => {
               disabled={!canSubmit}
               onClick={searchForAdverts}
             >
-              {canSubmit ? "Search" : "Enter more than 5 letters"}
+              {canSubmit ? "Search" : "Enter more than 4 letters"}
             </Button>
           </Grid>
         </Grid>

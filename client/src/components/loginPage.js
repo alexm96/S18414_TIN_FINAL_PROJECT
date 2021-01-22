@@ -9,7 +9,7 @@ import Container from "@material-ui/core/Container";
 import {startLogin,login} from "../actions/auth";
 import {connect} from "react-redux";
 import {GeneralInput} from "./generalInput";
-import header from "./header";
+
 const LoginPage = ({loginDispatch,history}) => {
   const classes = useStyles();
   const generateEmptyFields = () => {
@@ -55,7 +55,8 @@ const LoginPage = ({loginDispatch,history}) => {
     } 
   
   return (
-    <Container component="main" maxWidth="xs">
+
+    <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
