@@ -27,23 +27,23 @@ const useStyles = makeStyles((theme) => ({
     },
     holder:{
 
-        width:"100%"
+        width:"100%",
+
+        borderRadius:"10px"
     },
     innerData:{
         textAlign:"left",
-        width:"33%"
+        width:"33%",
+        borderRadius:"30px"
     },
     mainRow:{
         padding:"100px",
         backgroundColor:"#f3f1f1",
         borderCollapse:"separate",
-        borderSpacing:"1em"
+        borderSpacing:"1em",
+        borderRadius:"10px"
     }
-    ,
-    tryall:{
-        borderCollapse:"separate",
-        borderSpacing:"1em"
-    }
+
 }));
 const AdMini=(props)=>{
 
@@ -51,7 +51,7 @@ const AdMini=(props)=>{
 
     const classes = useStyles();
     return (
-        <TableRow className={classes.mainRow}  >
+        <TableRow className={classes.mainRow}   >
                 <TableCell width={"100%"} className={classes.holder}>
                     <Table >
                         <TableBody>

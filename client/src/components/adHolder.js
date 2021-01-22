@@ -19,9 +19,7 @@ const AdHolder=({history,getMiniAds})=>{
     return(
         <div>
         <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-            Your wildest dreams
-        </Typography>
+
         </div>
 
         <div className={classes.paper}>
