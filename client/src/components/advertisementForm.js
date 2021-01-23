@@ -18,7 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 
-const CreateAd = ({getJwt}) => {
+const CreateAd = ({getJwt,history}) => {
     const classes = useStyles();
     const [getTitle,setTitle]=useState("")
     const [getCategory,setCategory]=useState("14")
@@ -51,17 +51,24 @@ const CreateAd = ({getJwt}) => {
 
 
     }, []);
-   
+   useEffect(()=>{
+       const readAndRedirect=()=>{
+           history.push("/")
+       }
+        console.log("Creation"+creationResponse.status)
+       if(creationResponse && creationResponse.status===200){
+           console.log("here")
+           setTimeout(readAndRedirect,1000)
+       }
+   },[creationResponse])
     const createAd = async (event) => {
        event.preventDefault();
        const adToSend=serialize();
        setLoading(true)
        axios.post("/post",adToSend,{headers:{'Accept': 'application/json',"jwt":getJwt}}).then((response)=>{
-
-           setCreationResponse(response.data["message"])
+           setCreationResponse(response)
        }).catch((error)=>{
-
-           setCreationResponse(error.response.data["message"])
+           setCreationResponse(error)
        }).finally(()=>{
            setLoading(false)
        })
@@ -185,7 +192,7 @@ const CreateAd = ({getJwt}) => {
                     </Grid>
                 </form>
                 <p hidden={!isLoading}> Loading </p>
-                <p>{creationResponse} </p>
+                <p>{creationResponse===""?"":creationResponse.data["message"]} </p>
             </div>
         </Container>
     );

@@ -15,7 +15,6 @@ router.post("/",async (req,res,next)=> { // create new user (register)
           try {
              if (err ) {
                 const error = new Error('An error occurred.');
-
                 return next(error);
              }
              else if (!user){

@@ -33,13 +33,13 @@ passport.use(
                 if(userRow){
                     const passwordsMatch=await comparePassword(userRow.password,password)
                     if(!passwordsMatch){
-                        return done(null, false, { message: 'Wrong Password' });
+                        return done(null, false, { message: `Wrong Password ${nodeEmoji.get("frowning")}` });
                     }
                     else{
                         const userToReturn={"id":userRow.id,"email":userRow.email}
                         return done(null, userToReturn, { message: `Login successful ${nodeEmoji.get(
                                 "muscle"
-                            )}`.toString()});
+                            )} Redirecting you now!`.toString()});
                     }
             }
                 else{

@@ -33,7 +33,7 @@ const createAdvert = async (req, res) => {
   const result = await createAdvertisement(newAdvert, req.user._id, newImage);
   console.log(result);
   if (!!result) {
-    res.json({ message: "success" });
+    res.json({ message: `Ad created! ${nodeEmoji.get("heart_eyes")} Redirecting you home now` });
   } else {
     res.json({
       message: `Something went wrong on our end ${nodeEmoji.get(
