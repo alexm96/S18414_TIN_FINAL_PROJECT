@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
         borderCollapse:"separate",
         borderSpacing:"1em"
     }
-
+    ,icons:{
+        fill:"grey"
+    }
 }));
 export default useStyles

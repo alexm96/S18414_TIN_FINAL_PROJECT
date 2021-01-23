@@ -12,6 +12,7 @@ import {checkLoginStatus} from "../actions/header";
 import {withRouter} from 'react-router'
 import {Container} from "@material-ui/core";
 import {search} from "../actions/search";
+import ProfileMenu from "./profileMenu";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,14 +62,11 @@ const Header=({getLoggedIn,history,logoutDispatch,searchDispatch})=>{
                         event.preventDefault()
                         history.push("/createAd")
                     }}>Create new ad</Button>
-                    <Button color="inherit" onClick={(event)=>{
+                    <div className={!getLoggedIn?classes["should-be-hidden"]:""}><ProfileMenu/></div>
+                    <Button color="inherit"  className={getLoggedIn?classes["should-be-hidden"]:""} onClick={(event)=>{
                         event.preventDefault()
-                        if(!getLoggedIn){
-                            history.push("/login")
-                        }else{
-                            logoutDispatch()
-                        }
-                    }}>{!getLoggedIn ? "Login" : "Logout"  }</Button>
+                        history.push("/login")
+                    }}>Login</Button>
                 </Toolbar>
             </AppBar>
         </div>
