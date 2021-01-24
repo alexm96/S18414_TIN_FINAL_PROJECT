@@ -4,7 +4,9 @@ export default (state={},action)=>{
             return {...state,...action.userDetails}
         case "SET":
 
-            return {...action.userDetails}
+            return {...action.userDetails};
+        case "SETADS":
+            return {...state,...{"myAds":action.userAds}}
         default:
             return state
     }

@@ -78,8 +78,28 @@ exports.getAdvertisements = async (searchTerm, city) => {
   const formattedCity = "%" + city.toString().toLowerCase() + "%";
   try {
     const queryString = connection.format(
-      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id where lower(title) like ? and lower(city) like ?",
+      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at, from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id where lower(title) like ? and lower(city) like ?",
       [formattedSearchTerm, formattedCity]
+    );
+
+    const [rows, fields] = await connection.execute(queryString);
+
+    return rows.map((row) => {
+      const adImage = new ImageFromDb(row);
+      return new MiniAd(row, adImage);
+    });
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+};
+exports.getUserAdvertisements = async (id) => {
+  const connection = await mysql.createConnection(mysqlConnection);
+
+  try {
+    const queryString = connection.format(
+        "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? ",
+        [id]
     );
 
     const [rows, fields] = await connection.execute(queryString);

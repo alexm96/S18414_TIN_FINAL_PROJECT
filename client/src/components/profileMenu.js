@@ -91,7 +91,7 @@ const ProfileMenu = ({ history, logoutDispatch }) => {
         </StyledMenuItem>
         <StyledMenuItem
           onClick={(event) => {
-            console.log("unimplemented");
+            history.push("/myAds")
             handleClose();
           }}
         >

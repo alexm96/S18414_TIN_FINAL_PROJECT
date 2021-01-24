@@ -8,3 +8,7 @@ export const set = (getResult) => ({
   type: "SET",
   userDetails: getResult,
 });
+export const setAds=(userAds)=>({
+  type:"SETADS",
+  userAds
+})
