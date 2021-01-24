@@ -7,6 +7,7 @@ const { updateSpecificUser } = require("../controllers/usercontroller");
 const { getSpecificUser } = require("../controllers/usercontroller");
 const checkEmail = require("../controllers/registerController").checkEmail;
 const nodeEmoji = require("node-emoji");
+const {checkEmailUpdate} = require("../controllers/registerController");
 router.use(bodyparser.json());
 router.get(
   "/",
@@ -24,8 +25,9 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
     const userDetails = { ...req.body, id: req.user["_id"] };
-    const emailExists = await checkEmail(userDetails["email"]);
-    if (!emailExists) {
+    const emailExists = await checkEmailUpdate(userDetails["email"]);
+
+    if (!emailExists.exists||(req.user["_id"]===emailExists.id && emailExists)) {
       const updateResult = await updateSpecificUser(userDetails);
       if (updateResult === 1) {
         res.send({

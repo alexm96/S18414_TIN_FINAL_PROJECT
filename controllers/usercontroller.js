@@ -30,7 +30,7 @@ exports.updateSpecificUser = async (userObject) => {
       rows,
       fields,
     ] = await connection.query(
-      "update user set first_name=?,last_name=?,email=?,address_line1=?,address_line2=?,country=?,postal_code=?,city=?,phonenumber=?  where id=?",
+      "update user set first_name=?,last_name=?,email=?,address_line1=?,address_line2=?,country=?,postal_code=?,city=?,phonenumber=?,updated_at=?  where id=?",
       [
         userObject.firstName,
         userObject.lastName,
@@ -41,7 +41,8 @@ exports.updateSpecificUser = async (userObject) => {
         userObject.postalCode,
         userObject.city,
         userObject.phoneNumber,
-          userObject.id
+          new Date(new Date().toUTCString()),
+        userObject.id,
       ]
     );
 

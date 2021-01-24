@@ -26,10 +26,9 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
     city: "",
     phoneNumber: "",
   });
-  const [creationText,setCreationText]=useState("")
+  const [creationText, setCreationText] = useState("");
   const updateValues = (event) => {
-
-    setUserData({...userData, [event.target.name]: event.target.value });
+    setUserData({ ...userData, [event.target.name]: event.target.value });
   };
   useEffect(() => {
     // setting values to current stuff here
@@ -39,17 +38,19 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
         setUserData(res.data);
       });
   }, []);
-  const tryUpdate= async (event)=>{
+  const tryUpdate = async (event) => {
     event.preventDefault();
-    setCreationText("")
-    axios.put("/users",userData,{ headers: { jwt: getJwt }}).then((result)=>{
-      set(userData) // setting the global user data in the axios store
-      setCreationText(result.data.message)
-    }).catch((err)=>{
-
-      setCreationText(err.response.data.message)
-    })
-  }
+    setCreationText("");
+    axios
+      .put("/users", userData, { headers: { jwt: getJwt } })
+      .then((result) => {
+        set(userData); // setting the global user data in the axios store
+        setCreationText(result.data.message);
+      })
+      .catch((err) => {
+        setCreationText(err.response.data.message);
+      });
+  };
 
   return (
     <div>
@@ -105,7 +106,6 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   className="input-field"
                   type="tel"
                   name="phoneNumber"
-
                   variant="outlined"
                   required
                   fullWidth
@@ -191,20 +191,17 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
           </form>
           <p>{creationText}</p>
         </div>
-
       </Container>
-
     </div>
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
-
   update: (updatedFields) => dispatch(update(updatedFields)),
   set: (receivedFields) => dispatch(set(receivedFields)),
 });
 const mapStateToProps = (state) => ({
-  getJwt: state.auth.jwt,
-  getUserDetails: state.userDetails,
+    getJwt: state.auth.jwt,
+    getUserDetails: state.userDetails,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
