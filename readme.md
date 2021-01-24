@@ -1,4 +1,4 @@
-<h1>Final project for TIN-Fauxlx </h1>
+<h1>Final project for TIN-Faulx </h1>
 <h2>Components</h2>
 
 * Front end (React)

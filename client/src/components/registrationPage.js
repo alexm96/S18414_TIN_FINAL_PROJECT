@@ -137,6 +137,7 @@ for (const [key, value] of Object.entries(registrationFields)){
               name="password"
               placeholder="password"
               updateFunction={onUpdate}
+              type="password"
             ></GeneralInput>
             <GeneralInput
               name="confirmPassword"

@@ -17,11 +17,9 @@ const SearchBar = ({ searchDispatch }) => {
   const [canSubmit, setCanSubmit] = useState(false);
   const classes = useStyles();
   useEffect(() => {
-    termOk();
+    setCanSubmit(!!searchTerm && searchTerm.length >= 4)
   }, [searchTerm]);
-  const termOk = () => {
-    setCanSubmit(!!searchTerm && searchTerm.length >= 4);
-  };
+
   const searchForAdverts = async (event) => {
     event.preventDefault();
     const searchFields = {
@@ -57,7 +55,7 @@ const SearchBar = ({ searchDispatch }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon className={classes.icons}/>
+                    <SearchIcon className={classes.icons} style={{fill:"grey"}}/>
                   </InputAdornment>
                 ),
               }}
@@ -79,7 +77,7 @@ const SearchBar = ({ searchDispatch }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <AddLocationOutlinedIcon className={classes.icons}/>
+                    <AddLocationOutlinedIcon className={classes.icons} style={{fill:"grey"}}/>
                   </InputAdornment>
                 ),
               }}

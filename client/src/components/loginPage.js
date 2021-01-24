@@ -32,7 +32,7 @@ const LoginPage = ({loginDispatch,history}) => {
     }
 
 
-  },[loginResponse])
+  },[loginResponse,history])
   const onUpdate = (event) => {
     const keyItem = event.target.name;
     const value = event.target.value;
