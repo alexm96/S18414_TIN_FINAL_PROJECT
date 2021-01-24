@@ -53,7 +53,9 @@ exports.registerUser = async (req, res) => {
   }
     
    else {
-    connection.end();
+    connection.end().then(()=>{
+        console.log("con closed")
+    });
     res.send(`${newUser.email} already in system`);
   }
 };
@@ -64,3 +66,4 @@ const checkEmail = async (emailToCheck) => {
   const [rows, fields] = await connection.query(query, [emailToCheck]);
   return rows[0].existing > 0;
 };
+exports.checkEmail=checkEmail

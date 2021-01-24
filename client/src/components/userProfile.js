@@ -41,8 +41,8 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
   }, []);
   const tryUpdate= async (event)=>{
     event.preventDefault();
-    console.log(getJwt)
-    axios.patch("/users",userData,{ headers: { jwt: getJwt }}).then((result)=>{
+    setCreationText("")
+    axios.put("/users",userData,{ headers: { jwt: getJwt }}).then((result)=>{
       set(userData) // setting the global user data in the axios store
       setCreationText(result.data.message)
     }).catch((err)=>{
@@ -199,7 +199,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateDetails: (formFields) => dispatch(updateDetails(formFields)),
+
   update: (updatedFields) => dispatch(update(updatedFields)),
   set: (receivedFields) => dispatch(set(receivedFields)),
 });
