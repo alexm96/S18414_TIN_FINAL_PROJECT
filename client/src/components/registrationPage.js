@@ -10,7 +10,7 @@ import {GeneralInput} from "./generalInput";
 import {connect} from "react-redux";
 import useStyles from "./generalStyles"
 
-const phRegex= "\\+[0-9]+"
+const phRegex= "\+[0-9]+"
 
 const RegistrationPage = ({getJwt}) => {
 
@@ -32,7 +32,7 @@ const RegistrationPage = ({getJwt}) => {
     return (
       someFormData["password"] &&
       someFormData["password"] === someFormData["confirmPassword"] &&
-      target.reportValidity()
+      verifyFormValidity()
     );
   };
   const [registrationFields, setRegistrationFields] = useState(
@@ -144,6 +144,7 @@ for (const [key, value] of Object.entries(registrationFields)){
               placeholder="confirm password"
               updateFunction={onUpdate}
               type="password"
+
             ></GeneralInput>
             <Button
               type="submit"

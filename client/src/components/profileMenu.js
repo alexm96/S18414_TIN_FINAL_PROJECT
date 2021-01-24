@@ -60,7 +60,7 @@ const ProfileMenu = ({ history, logoutDispatch }) => {
   return (
     <div>
       <Button
-        style={{ "box-shadow": "none" }}
+        style={{ "boxShadow": "none" }}
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"

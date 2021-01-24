@@ -17,7 +17,7 @@ const GeneralInput = (props) => {
                 fullWidth
                 onChange={props.updateFunction}
                 inputProps={{ pattern: props.pattern }}
-
+                value={props.value}
             ></TextField>
         </Grid>
     );
