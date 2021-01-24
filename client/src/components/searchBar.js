@@ -5,21 +5,21 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import useStyles from "./generalStyles";
+import AddLocationOutlinedIcon from '@material-ui/icons/AddLocationOutlined';
+import { getSearchItems, search } from "../actions/search";
+import { InputAdornment } from "@material-ui/core";
 
-import {getSearchItems, search} from "../actions/search";
+import SearchIcon from "@material-ui/icons/Search";
 
-
-const SearchBar = ({searchDispatch}) => {
+const SearchBar = ({ searchDispatch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCity, setSearchCity] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
   const classes = useStyles();
   useEffect(() => {
-    termOk();
+    setCanSubmit(!!searchTerm && searchTerm.length >= 4)
   }, [searchTerm]);
-  const termOk = () => {
-    setCanSubmit(!!searchTerm && searchTerm.length >= 4);
-  };
+
   const searchForAdverts = async (event) => {
     event.preventDefault();
     const searchFields = {
@@ -28,12 +28,11 @@ const SearchBar = ({searchDispatch}) => {
     };
 
     const results = await getSearchItems(searchFields);
-    if(results.status===200){
-
-      searchDispatch(results.data)
+    if (results.status === 200) {
+      searchDispatch(results.data);
+    } else {
+      console.log(results.message);
     }
-    else{
-      console.log(results.message)}
   };
   return (
     <div>
@@ -53,6 +52,13 @@ const SearchBar = ({searchDispatch}) => {
                 event.preventDefault();
                 setSearchTerm(event.target.value);
               }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon className={classes.icons} style={{fill:"grey"}}/>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={6} sm={3}>
@@ -67,6 +73,13 @@ const SearchBar = ({searchDispatch}) => {
               onChange={(event) => {
                 event.preventDefault();
                 setSearchCity(event.target.value);
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddLocationOutlinedIcon className={classes.icons} style={{fill:"grey"}}/>
+                  </InputAdornment>
+                ),
               }}
             />
           </Grid>
@@ -90,9 +103,9 @@ const SearchBar = ({searchDispatch}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  searchDispatch:(searchResults)=>dispatch(search(searchResults))
+  searchDispatch: (searchResults) => dispatch(search(searchResults)),
 });
-const mapStateToProps=(state)=>({
-  getMiniAds:state.search
-})
+const mapStateToProps = (state) => ({
+  getMiniAds: state.search,
+});
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

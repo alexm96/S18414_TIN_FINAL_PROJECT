@@ -7,6 +7,7 @@ import Header from "../components/header";
 import Home from "../components/home";
 import ProtectedRoute from "./protectedRoutes";
 import CreateAd from "../components/advertisementForm";
+import UserProfile from "../components/userProfile";
 const createHistory=require("history").createBrowserHistory
 export const History=createHistory()
 const AppRouter=()=>(
@@ -18,7 +19,8 @@ const AppRouter=()=>(
                 <Route path="/" component={Home} exact={true} />
             <Route path='/register' component={RegistrationPage} />
             <Route path='/login' component={LoginPage}/>
-            <ProtectedRoute path={"/createAd"} component={CreateAd}></ProtectedRoute>
+            <ProtectedRoute path={"/createAd"} component={CreateAd}/>
+                <ProtectedRoute path={"/profile"} component={UserProfile}/>
             </Switch>
         </div>
          </Router>
