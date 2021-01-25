@@ -8,6 +8,7 @@ import Home from "../components/home";
 import ProtectedRoute from "./protectedRoutes";
 import CreateAd from "../components/advertisementForm";
 import UserProfile from "../components/userProfile";
+import UserAdHolder from "../components/userAds";
 const createHistory=require("history").createBrowserHistory
 export const History=createHistory()
 const AppRouter=()=>(
@@ -21,6 +22,7 @@ const AppRouter=()=>(
             <Route path='/login' component={LoginPage}/>
             <ProtectedRoute path={"/createAd"} component={CreateAd}/>
                 <ProtectedRoute path={"/profile"} component={UserProfile}/>
+                <ProtectedRoute path={"/myAds"} component={UserAdHolder}/>
             </Switch>
         </div>
          </Router>

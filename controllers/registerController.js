@@ -65,7 +65,7 @@ const checkEmailUpdate = async (emailToCheck) => {
   let query = `select id,count(1) as existing from user where email=? group by 1`;
   const [rows, fields] = await connection.query(query, [emailToCheck]);
   if (rows[0] === undefined) {
-    return { id: 123, exists: false }; // for the case where the id actually doesn't exist in the system we make a mock object instead (which always passes the short circuit and anyway)
+    return { id: 123, exists: false }; // for the case where the email actually doesn't exist in the system we make a mock object instead (which always passes the short circuit and anyway)
   }
   return { id: rows[0].id, exists: rows[0].existing > 0 };
 };

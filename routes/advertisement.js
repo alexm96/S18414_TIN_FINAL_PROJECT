@@ -9,6 +9,8 @@ const getAvailableAdvertisements = require("../controllers/advertisementControll
   .getAvailableAdvertisements;
 const getApplicableAdvertisements = require("../controllers/advertisementController")
   .getAdvertisements;
+const getUserApplicableAdvertisements = require("../controllers/advertisementController")
+    .getUserAdvertisements;
 const nodeEmoji = require("node-emoji");
 const uploadFile = require("../utils/multerStorage");
 const {
@@ -56,6 +58,14 @@ router.get("/", async (req, res, next) => {
   const searchTerm = req.query.term;
   const city = req.query.city;
   const ads = await getApplicableAdvertisements(searchTerm, city);
+  res.send(ads);
+});
+router.get("/userPosts",passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+  // no auth needed for now , returns miniAds (Title,price, picture)
+
+  const userId=req.user["_id"]
+  const ads = await getUserApplicableAdvertisements(userId);
+  console.log("ads")
   res.send(ads);
 });
 router.post("/:id", (req, res, next) => {
