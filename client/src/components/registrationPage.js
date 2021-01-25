@@ -27,7 +27,7 @@ const RegistrationPage = ({getJwt}) => {
       confirmPassword: "",
       password: ""
     };
-  };
+  }; // TODO add a useeffect here maybe , with dep of registrationfields(so then it can check validity everytime, rather than me calling it )
   const verifyData = (someFormData, target) => {
     return (
       someFormData["password"] &&
