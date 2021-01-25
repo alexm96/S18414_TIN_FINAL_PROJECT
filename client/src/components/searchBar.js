@@ -11,7 +11,7 @@ import { InputAdornment } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
 
-const SearchBar = ({ searchDispatch }) => {
+const SearchBar = ({ searchDispatch,paginationObject ,updateMaxPageNumber}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCity, setSearchCity] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
@@ -19,21 +19,30 @@ const SearchBar = ({ searchDispatch }) => {
   useEffect(() => {
     setCanSubmit(!!searchTerm && searchTerm.length >= 4)
   }, [searchTerm]);
-
+  useEffect(()=>{
+    if(!!paginationObject){
+      searchForAdverts().then(()=>{
+        console.log("ok")
+      })
+    }
+  },[paginationObject])
   const searchForAdverts = async (event) => {
-    event.preventDefault();
+    if(event){event.preventDefault();}
     const searchFields = {
       term: searchTerm,
       city: searchCity,
     };
 
-    const results = await getSearchItems(searchFields);
+    const results = await getSearchItems(searchFields,paginationObject["pageNumber"],paginationObject["pageSize"]);
     if (results.status === 200) {
-      searchDispatch(results.data);
+      searchDispatch(results.data["adverts"]);
+      updateMaxPageNumber(results.data["maxPage"])
+      console.log(results.data["maxPage"])
     } else {
       console.log(results.message);
     }
   };
+
   return (
     <div>
       <form className={classes.form}>

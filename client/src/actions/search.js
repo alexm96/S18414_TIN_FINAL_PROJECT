@@ -4,9 +4,9 @@ export const search =  (searchResult) =>({
     type: 'SEARCH',
     searchResult
 });
-export const getSearchItems=async (searchFields)=>{
+export const getSearchItems=async (searchFields,pageNumber,pageSize)=>{
     console.log(searchFields)
-    const result=await  axios.get("/post/",{params:searchFields})
+    const result=await  axios.get(`/post/?pNum=${pageNumber}&pSize=${pageSize}`,{params:searchFields})
         .then(res => {
             return res;
         }).catch((error)=>{

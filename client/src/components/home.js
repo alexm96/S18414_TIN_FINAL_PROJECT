@@ -7,31 +7,55 @@ import useStyles from "./generalStyles";
 import Grid from "@material-ui/core/Grid";
 import {connect} from "react-redux";
 import AdHolder from "./adHolder";
+import Button from "@material-ui/core/Button";
 
-const Home=({history})=>{
+const Home=({history,getMiniAds})=>{
     const classes = useStyles();
-    return(
-        <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
-                Find something cool!
-            </Typography>
-            <Container id={"search-container"} >
+    const handleIncrement=(event)=>{
+        event.preventDefault();
+        const previousPage=paginationObject["pageNumber"]
+        const newPaginationObject={...paginationObject,pageNumber:Math.min(previousPage+1,maxPages)}
+        setPaginationObject(newPaginationObject)
+    }
+    const handleDecrement=(event)=>{
+        const previousPage=paginationObject["pageNumber"]
+        const newPaginationObject={...paginationObject,pageNumber:Math.max(previousPage-1,1)}
+        setPaginationObject(newPaginationObject)
+    }
+    const setMaxPageSize=(maxPage)=>{
+        setMaxPages(maxPage)
+    }
+    const [paginationObject,setPaginationObject]=useState({
+        pageNumber:1,
+        pageSize:5
+    })
+    const [maxPages,setMaxPages]=useState(100000)
+    return (
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Find something cool!
+        </Typography>
+        <Container id={"search-container"}>
+          <SearchBar paginationObject={paginationObject} updateMaxPageNumber={setMaxPageSize} />
+        </Container>
 
-                <SearchBar/>
-            </Container>
+        <Container id={"mini-container"}>
+          <AdHolder />
+        </Container>
+          {getMiniAds.length>0 &&
+          <div>
 
-            <Container id={"mini-container"}>
-               <AdHolder/>
-            </Container>
-
-
-        </div>
-
-    )
+          <Button onClick={handleDecrement}>{"<--"} </Button>
+          <a>{paginationObject["pageNumber"]}</a>
+          <Button onClick={handleIncrement}>{"-->"} </Button>
+        </div>}
+      </div>
+    );
 
 };
 const mapStateToProps=(state)=>({
-    getJwt:state.auth.jwt
+    getJwt:state.auth.jwt,
+    getMiniAds:state.search
 })
 export default connect(mapStateToProps)(Home);
 
