@@ -5,10 +5,13 @@ const Advertisement = require("../models/advertisement").Advertisement;
 const passport = require("passport");
 const bodyparser = require("body-parser");
 const formData = require("form-data");
+const Message= require("../models/message").message;
 const getAvailableAdvertisements = require("../controllers/advertisementController")
   .getAvailableAdvertisements;
 const getApplicableAdvertisements = require("../controllers/advertisementController")
   .getAdvertisements;
+const deleteAd = require("../controllers/advertisementController")
+    .deleteAdvertisement;
 const getUserApplicableAdvertisements = require("../controllers/advertisementController")
     .getUserAdvertisements;
 const nodeEmoji = require("node-emoji");
@@ -68,7 +71,21 @@ router.get("/userPosts",passport.authenticate("jwt", { session: false }), async 
   console.log("ads")
   res.send(ads);
 });
-router.post("/:id", (req, res, next) => {
-  // no auth needed, returns full add when loading page
-});
+
+router.delete("/",passport.authenticate("jwt",{session:false}),async (req,res,next)=>{
+  const userId=req.user["_id"]
+  const adId=req.body.adId;
+  console.log(userId,adId)
+
+  if(!!userId&&!!adId){
+    const messageToUser=await deleteAd(userId,adId)
+    res.send(messageToUser)
+  }
+  else{
+    res.send(new Message("Please login and provide a valid advertisement id"))
+  }
+
+
+
+})
 module.exports = router;

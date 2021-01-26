@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const Message= require("../models/message").message
 const mysql = require("mysql2/promise");
 const { generateId } = require("../utils/nanoid");
 const uploadMyOwnImage = require("./imageController").uploadMyOwnImage;
@@ -8,7 +8,7 @@ const getSpecificCategory = require("../controllers/categoryController")
   .getCategoryId;
 const ImageFromDb = require("../models/image").ImageFromDb;
 const MiniAd = require("../models/miniAd").MiniAd;
-
+const NodeEmoji=require("node-emoji")
 exports.createAdvertisement = async (advertObject, userUid, imageData) => {
   // get category id
   // upload image and get id
@@ -70,7 +70,47 @@ exports.createAdvertisement = async (advertObject, userUid, imageData) => {
   }
 };
 exports.updateAdvertisement = async (req, res) => {};
-exports.deleteAdvertisement = async (req, res) => {};
+exports.deleteAdvertisement = async (userId,adId) => {
+  // deleting ad , first we check if user and ad match up (in m2m table), if yes then we delete, then location, then delete image, then ad itself
+  // in one transaction!!
+  const connection = await mysql.createConnection(mysqlConnection)
+  try{
+    await connection.query("START TRANSACTION");
+    const findMatch=mysql.format("select id from user_advertisement where user_id=? and ad_id=?",[userId,adId])
+    const [matchRow,matchField]=await connection.execute(findMatch)
+
+
+    if(matchRow.length<1){
+      return new Message(`You are trying to delete someone else's ad or the ad doesn't exist ${NodeEmoji.get("no_entry_sign")}`)
+      }
+
+      else{
+      const matchId=matchRow[0]["id"]
+      const deleteMatchQuery=mysql.format("delete from user_advertisement where id =?",[matchId])
+      await connection.execute(deleteMatchQuery)
+      const deleteLocationQuery=mysql.format("delete from location where id=?",[adId])
+      await connection.execute(deleteLocationQuery)
+      const relevantImageQuery=mysql.format("select image_id from advertisement where id=?",[adId])
+      const [imageRow,imageField]=await connection.execute(relevantImageQuery)
+      const imageId=imageRow[0]["image_id"]
+      const deleteAdQuery=mysql.format("delete from advertisement where id =?",[adId])
+      await connection.execute(deleteAdQuery)
+      const deleteImageQuery=mysql.format("delete from image where id=?",[imageId])
+      await connection.execute(deleteImageQuery)
+      await connection.query("COMMIT")
+      return new Message(`Successfully deleted ${NodeEmoji.get("x")}`)
+      }
+    }catch (error){
+    console.log(error)
+    await connection.query("ROLLBACK")
+    return new Message("Something went wrong on our end!")
+  }finally {
+    connection.end().then((res)=>{
+      console.log("connection closed succesfully")
+    })
+  }
+
+};
 exports.getAdvertisement = async (req, res) => {};
 exports.getAdvertisements = async (searchTerm, city) => {
   const connection = await mysql.createConnection(mysqlConnection);
@@ -98,8 +138,8 @@ exports.getUserAdvertisements = async (id) => {
 
   try {
     const queryString = connection.format(
-        "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? ",
-        [id]
+      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? ",
+      [id]
     );
 
     const [rows, fields] = await connection.execute(queryString);
