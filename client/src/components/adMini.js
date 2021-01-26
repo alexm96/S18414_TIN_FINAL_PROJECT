@@ -70,6 +70,7 @@ const AdMini = ({getJwt,...props}) => {
     await axios
       .delete(`post/${props.id}`, { headers: { jwt:getJwt } })
       .then((result) => {
+        alert(result.data["message"])
         history.push("/myAds")
 
       })
