@@ -96,7 +96,7 @@ exports.getAdvertisements = async (searchTerm, city,pageNumber,pageSize) => {
     });
     console.log(numberQueryString)
     const numberOfAds=numberRows[0]["total_ads"]
-    const maxPages=Math.round((numberOfAds/pageSize)-.5)
+    const maxPages=Math.round((numberOfAds/pageSize)+.5)
     console.log(numberOfAds)
     return {
       "adverts":adverts,
@@ -116,7 +116,7 @@ exports.getUserAdvertisements = async (id) => {
 
   try {
     const queryString = connection.format(
-      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? ",
+      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? order by created_at desc ",
       [id]
     );
 
