@@ -72,14 +72,52 @@ exports.createAdvertisement = async (advertObject, userUid, imageData) => {
 exports.updateAdvertisement = async (req, res) => {};
 exports.deleteAdvertisement = async (req, res) => {};
 exports.getAdvertisement = async (req, res) => {};
-exports.getAdvertisements = async (searchTerm, city) => {
+exports.getAdvertisements = async (searchTerm, city,pageNumber,pageSize) => {
   const connection = await mysql.createConnection(mysqlConnection);
   const formattedSearchTerm = "%" + searchTerm.toLowerCase() + "%";
   const formattedCity = "%" + city.toString().toLowerCase() + "%";
   try {
     const queryString = connection.format(
-      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at, from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id where lower(title) like ? and lower(city) like ?",
-      [formattedSearchTerm, formattedCity]
+      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id where lower(title) like ? and lower(city) like ? limit ?,?",
+      [formattedSearchTerm, formattedCity,(pageNumber-1)*pageSize,parseInt(pageSize)]
+    );
+
+    const [rows, fields] = await connection.execute(queryString);
+    const numberQueryString = connection.format(
+        "Select count(1) as total_ads from advertisement join location on location.id=advertisement.id where lower(title) like ? and lower(city) like ? ",
+        [formattedSearchTerm, formattedCity]
+    );
+
+    const [numberRows, numberFields] = await connection.execute(numberQueryString);
+
+    const adverts=rows.map((row) => {
+      const adImage = new ImageFromDb(row);
+      return new MiniAd(row, adImage);
+    });
+    console.log(numberQueryString)
+    const numberOfAds=numberRows[0]["total_ads"]
+    const maxPages=Math.round((numberOfAds/pageSize)-.5)
+    console.log(numberOfAds)
+    return {
+      "adverts":adverts,
+      "maxPage":maxPages
+    }
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }finally {
+    connection.end().then(()=>console.log("connection close"))
+  }
+};
+
+
+exports.getUserAdvertisements = async (id) => {
+  const connection = await mysql.createConnection(mysqlConnection);
+
+  try {
+    const queryString = connection.format(
+      "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? ",
+      [id]
     );
 
     const [rows, fields] = await connection.execute(queryString);
@@ -92,25 +130,8 @@ exports.getAdvertisements = async (searchTerm, city) => {
     console.log(error);
     return undefined;
   }
-};
-exports.getUserAdvertisements = async (id) => {
-  const connection = await mysql.createConnection(mysqlConnection);
-
-  try {
-    const queryString = connection.format(
-        "select title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id where user_advertisement.user_id=? ",
-        [id]
-    );
-
-    const [rows, fields] = await connection.execute(queryString);
-
-    return rows.map((row) => {
-      const adImage = new ImageFromDb(row);
-      return new MiniAd(row, adImage);
-    });
-  } catch (error) {
-    console.log(error);
-    return undefined;
+  finally {
+    connection.end().then(()=>console.log("connection close"))
   }
 };
 exports.getAvailableAdvertisements = async (req, res) => {
