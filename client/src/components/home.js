@@ -8,7 +8,8 @@ import Grid from "@material-ui/core/Grid";
 import {connect} from "react-redux";
 import AdHolder from "./adHolder";
 import Button from "@material-ui/core/Button";
-
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 const Home=({history,getMiniAds})=>{
     const classes = useStyles();
     const handleIncrement=(event)=>{
@@ -45,9 +46,9 @@ const Home=({history,getMiniAds})=>{
           {getMiniAds.length>0 &&
           <div>
 
-          <Button onClick={handleDecrement}>{"<--"} </Button>
+          <Button onClick={handleDecrement}><ArrowBackIcon/> </Button>
           <a>{paginationObject["pageNumber"]}</a>
-          <Button onClick={handleIncrement}>{"-->"} </Button>
+          <Button onClick={handleIncrement}><ArrowForwardIcon/> </Button>
         </div>}
       </div>
     );
