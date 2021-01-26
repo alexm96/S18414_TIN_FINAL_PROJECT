@@ -1,12 +1,16 @@
 import { TableBody, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { MergeType } from "@material-ui/icons";
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from "@material-ui/core/Button";
+import {connect} from "react-redux";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,9 +59,25 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "right",
   },
 }));
-const AdMini = (props) => {
-  {/*Todo fix css here, make bottom time component on same horizontal level as image , change font (title), add currency (default zloty)*/}
+const AdMini = ({getJwt,...props}) => {
+  const history=useHistory()
+  {
+    /*Todo fix css here, make bottom time component on same horizontal level as image , change font (title), add currency (default zloty)*/
+  }
   const classes = useStyles();
+
+  const attemptDelete = async () => {
+    await axios
+      .delete(`post/${props.id}`, { headers: { jwt:getJwt } })
+      .then((result) => {
+        history.push("/myAds")
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <TableRow className={classes.mainRow}>
       <TableCell width={"100%"} className={classes.holder}>
@@ -81,6 +101,9 @@ const AdMini = (props) => {
                 style={{ verticalAlign: "top" }}
               >
                 <div className={classes.price}>
+                  <Button onClick={attemptDelete}>
+                    <DeleteIcon />
+                  </Button>
                   <Typography property={"p"}>{props.price}</Typography>
                 </div>
               </TableCell>
@@ -95,4 +118,8 @@ const AdMini = (props) => {
     </TableRow>
   );
 };
-export default AdMini
+const mapStateToProps=(state)=>({
+  getJwt:state.auth.jwt
+})
+
+export default connect(mapStateToProps)(AdMini);

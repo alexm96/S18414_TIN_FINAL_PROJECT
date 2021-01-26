@@ -72,11 +72,11 @@ router.get("/userPosts",passport.authenticate("jwt", { session: false }), async 
   res.send(ads);
 });
 
-router.delete("/",passport.authenticate("jwt",{session:false}),async (req,res,next)=>{
+router.delete("/:adId",passport.authenticate("jwt",{session:false}),async (req,res,next)=>{
   const userId=req.user["_id"]
-  const adId=req.body.adId;
+  console.log(req.params)
+  const adId=req.params.adId;
   console.log(userId,adId)
-
   if(!!userId&&!!adId){
     const messageToUser=await deleteAd(userId,adId)
     res.send(messageToUser)
