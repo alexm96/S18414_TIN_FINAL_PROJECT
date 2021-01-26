@@ -58,9 +58,12 @@ router.post(
 router.use(bodyparser.json());
 router.get("/", async (req, res, next) => {
   // no auth needed for now , returns miniAds (Title,price, picture)
+
   const searchTerm = req.query.term;
   const city = req.query.city;
-  const ads = await getApplicableAdvertisements(searchTerm, city);
+  const pageNumber=req.query.pNum;
+  const pageSize=req.query.pSize;
+  const ads = await getApplicableAdvertisements(searchTerm, city,pageNumber,pageSize);
   res.send(ads);
 });
 router.get("/userPosts",passport.authenticate("jwt", { session: false }), async (req, res, next) => {
