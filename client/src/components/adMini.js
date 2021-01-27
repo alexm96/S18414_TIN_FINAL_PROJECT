@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "right",
   },
 }));
-const AdMini = ({getJwt,...props}) => {
+const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
   const history=useHistory()
   {
     /*Todo fix css here, make bottom time component on same horizontal level as image , change font (title), add currency (default zloty)*/
@@ -102,10 +102,11 @@ const AdMini = ({getJwt,...props}) => {
                 style={{ verticalAlign: "top" }}
               >
                 <div className={classes.price}>
-                  <Button onClick={attemptDelete}>
-                    <DeleteIcon />
-                  </Button>
+
                   <Typography property={"p"}>{props.price}</Typography>
+                  { shouldBeDeletable && <Button onClick={attemptDelete}>
+                    <DeleteIcon />
+                  </Button>}
                 </div>
               </TableCell>
             </TableRow>

@@ -34,7 +34,7 @@ const AdHolder=({history,getMiniAds,getJwt})=>{
                 <Table style={style} className={classes.adTable}>
                     <TableBody>
                     {getMiniAds.map((miniAd,index)=>{
-                        return <AdMini key={index} {...miniAd}></AdMini>
+                        return <AdMini key={index} shouldBeDeletable={false} {...miniAd}></AdMini>
                     })}
                     </TableBody>
                 </Table>
