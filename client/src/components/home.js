@@ -14,22 +14,20 @@ const Home=({history,getMiniAds})=>{
     const classes = useStyles();
     const handleIncrement=(event)=>{
         event.preventDefault();
-        const previousPage=paginationObject["pageNumber"]
-        const newPaginationObject={...paginationObject,pageNumber:Math.min(previousPage+1,maxPages)}
-        setPaginationObject(newPaginationObject)
+        const previousPage=pageNumber
+        setPageNumber(Math.min(previousPage+1,maxPages))
     }
     const handleDecrement=(event)=>{
-        const previousPage=paginationObject["pageNumber"]
-        const newPaginationObject={...paginationObject,pageNumber:Math.max(previousPage-1,1)}
-        setPaginationObject(newPaginationObject)
+        const previousPage=pageNumber
+        setPageNumber(Math.max(previousPage-1,1))
+
     }
     const setMaxPageSize=(maxPage)=>{
         setMaxPages(maxPage)
     }
-    const [paginationObject,setPaginationObject]=useState({
-        pageNumber:1,
-        pageSize:5
-    })
+
+    const [pageNumber,setPageNumber]=useState(1)
+    const [pageSize,setPageSize]=useState(5)
     const [maxPages,setMaxPages]=useState(100000)
     return (
       <div className={classes.paper}>
@@ -37,7 +35,7 @@ const Home=({history,getMiniAds})=>{
           Find something cool!
         </Typography>
         <Container id={"search-container"}>
-          <SearchBar paginationObject={paginationObject} updateMaxPageNumber={setMaxPageSize} />
+          <SearchBar pageNumber={pageNumber} pageSize={pageSize} updateMaxPageNumber={setMaxPageSize} />
         </Container>
 
         <Container id={"mini-container"}>
@@ -47,7 +45,7 @@ const Home=({history,getMiniAds})=>{
           <div>
 
           <Button onClick={handleDecrement}><ArrowBackIcon/> </Button>
-          <a>{paginationObject["pageNumber"]}</a>
+          <a>{pageNumber}</a>
           <Button onClick={handleIncrement}><ArrowForwardIcon/> </Button>
         </div>}
       </div>

@@ -44,7 +44,7 @@ const UserAdHolder=({history,getUserAds,getJwt,setAds})=>{
                     <Table style={style} className={classes.adTable}>
                         <TableBody>
                             {checkAdData().map((miniAd,index)=>{
-                                return <AdMini key={index} {...miniAd}></AdMini>
+                                return <AdMini key={index} shouldBeDeletable={true}{...miniAd}></AdMini>
                             })}
                         </TableBody>
                     </Table>

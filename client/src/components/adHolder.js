@@ -10,7 +10,7 @@ import Table from "@material-ui/core/Table";
 import TableRow from "@material-ui/core/TableRow";
 
 
-const AdHolder=({history,getMiniAds})=>{
+const AdHolder=({history,getMiniAds,getJwt})=>{
     const style = {
         borderCollapse:"separate",
         borderSpacing:"1em"
@@ -34,7 +34,7 @@ const AdHolder=({history,getMiniAds})=>{
                 <Table style={style} className={classes.adTable}>
                     <TableBody>
                     {getMiniAds.map((miniAd,index)=>{
-                        return <AdMini key={index} {...miniAd}></AdMini>
+                        return <AdMini key={index} shouldBeDeletable={false} {...miniAd}></AdMini>
                     })}
                     </TableBody>
                 </Table>
@@ -48,6 +48,7 @@ const AdHolder=({history,getMiniAds})=>{
 };
 
 const mapStateToProps=(state)=>({
-    getMiniAds:state.search
+    getMiniAds:state.search,
+    getJwt:state.auth.jwt
 })
 export default connect(mapStateToProps)(AdHolder);
