@@ -25,7 +25,6 @@ const Home=({history,getMiniAds})=>{
     const setMaxPageSize=(maxPage)=>{
         setMaxPages(maxPage)
     }
-
     const [pageNumber,setPageNumber]=useState(1)
     const [pageSize,setPageSize]=useState(5)
     const [maxPages,setMaxPages]=useState(100000)

@@ -70,13 +70,14 @@ exports.createAdvertisement = async (advertObject, userUid, imageData) => {
   }
 };
 exports.updateAdvertisement = async (req, res) => {};
-exports.deleteAdvertisement = async (userId,adId) => {
+exports.deleteAdvertisement = async (userId,adId,is_admin=false) => {
   // deleting ad , first we check if user and ad match up (in m2m table), if yes then we delete, then location, then delete image, then ad itself
   // in one transaction!!
   const connection = await mysql.createConnection(mysqlConnection)
   try{
     await connection.query("START TRANSACTION");
-    const findMatch=mysql.format("select id from user_advertisement where user_id=? and ad_id=?",[userId,adId])
+    const findMatch=mysql.format("select id from user_advertisement where (user_id=? or ?) and ad_id=?",[userId,is_admin,adId])
+    console.log(findMatch)
     const [matchRow,matchField]=await connection.execute(findMatch)
 
 
@@ -165,6 +166,31 @@ exports.getUserAdvertisements = async (id) => {
       [id]
     );
 
+    const [rows, fields] = await connection.execute(queryString);
+
+    return rows.map((row) => {
+      const adImage = new ImageFromDb(row);
+      return new MiniAd(row, adImage);
+    });
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+  finally {
+    connection.end().then(()=>console.log("connection close"))
+  }
+};
+exports.getAllAdvertisements = async (is_admin) => {
+  const connection = await mysql.createConnection(mysqlConnection);
+
+  try {
+    const queryString = connection.format(
+
+        "select advertisement.id,title,price,image.type,image.name,image.data,advertisement.created_at as created_at from advertisement join image on advertisement.image_id=image.id join location on location.id=advertisement.id join user_advertisement on user_advertisement.ad_id=advertisement.id  where ? order by created_at desc "
+    ,[is_admin]
+
+    );
+    console.log(queryString)
     const [rows, fields] = await connection.execute(queryString);
 
     return rows.map((row) => {

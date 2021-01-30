@@ -16,6 +16,8 @@ const getUserApplicableAdvertisements = require("../controllers/advertisementCon
     .getUserAdvertisements;
 const nodeEmoji = require("node-emoji");
 const uploadFile = require("../utils/multerStorage");
+const {getAllAdvertisements} = require("../controllers/advertisementController");
+const {checkIfAdmin} = require("../middleware/admin");
 const {
   createAdvertisement,
 } = require("../controllers/advertisementController");
@@ -74,14 +76,17 @@ router.get("/userPosts",passport.authenticate("jwt", { session: false }), async 
   console.log("ads")
   res.send(ads);
 });
-
+router.get("/adminPost",passport.authenticate("jwt",{session:false}),async (req,res)=>{
+  const ads = await getAllAdvertisements(req.user.is_admin)
+  res.send(ads)
+})
 router.delete("/:adId",passport.authenticate("jwt",{session:false}),async (req,res,next)=>{
   const userId=req.user["_id"]
   console.log(req.params)
   const adId=req.params.adId;
   console.log(userId,adId)
   if(!!userId&&!!adId){
-    const messageToUser=await deleteAd(userId,adId)
+    const messageToUser=await deleteAd(userId,adId,req.user.is_admin)
     res.send(messageToUser)
   }
   else{

@@ -22,7 +22,7 @@ passport.use(
             const connection = await mysql.createConnection(mysqlConnection);
             try {
                 const [rows,fields]=await connection.query(
-                    'SELECT id,email,password FROM `user` WHERE `email` = ? ',
+                    'SELECT id,email,password,is_admin FROM `user` WHERE `email` = ? ',
                     [email],(err,res)=>{
                         if(err){
                             throw new Error(err); // seems to not work within callback, have to await and use elsewhere
@@ -36,7 +36,7 @@ passport.use(
                         return done(null, false, { message: `Wrong Password ${nodeEmoji.get("frowning")}` });
                     }
                     else{
-                        const userToReturn={"id":userRow.id,"email":userRow.email}
+                        const userToReturn={"id":userRow.id,"email":userRow.email,is_admin:true}
                         return done(null, userToReturn, { message: `Login successful ${nodeEmoji.get(
                                 "muscle"
                             )} Redirecting you now!`.toString()});

@@ -21,13 +21,12 @@ router.post("/", async (req, res, next) => {
 
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
-
-        const token = jwt.sign({ _id: user.id, email: user.email }, secret, {
+        const token = jwt.sign({ _id: user.id, email: user.email,is_admin:user.is_admin }, secret, {
           expiresIn: "8h",
         });
-        console.log(token)
-        res.set("JWT", token);
 
+        res.set("JWT", token);
+        res.set("admin",user.is_admin)
         return res.json({ ...info });
       });
     } catch (error) {
