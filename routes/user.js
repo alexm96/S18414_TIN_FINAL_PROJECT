@@ -9,6 +9,7 @@ const checkEmail = require("../controllers/registerController").checkEmail;
 const nodeEmoji = require("node-emoji");
 const {checkEmailUpdate} = require("../controllers/registerController");
 router.use(bodyparser.json());
+// todo , add check admin middleware , call it on admin endpoint, ads only if admin , change controller sql to have check if user is_admin
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),

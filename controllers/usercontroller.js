@@ -11,7 +11,7 @@ exports.getSpecificUser = async (id) => {
       rows,
       fields,
     ] = await connection.query(
-      "Select first_name,last_name,email,address_line1,address_line2,country,postal_code,city,phonenumber from user where id=?",
+      "Select first_name,last_name,email,address_line1,address_line2,country,postal_code,city,phonenumber,is_admin from user where id=?",
       [id]
     );
 

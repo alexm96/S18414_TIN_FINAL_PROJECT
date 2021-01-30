@@ -1,12 +1,14 @@
 import axios from "axios";
 
-export const login =  (jwt_token) =>({
-    type: 'LOGIN',
-    jwt_token
+export const login = (jwt_token,is_admin) => ({
+  type: "LOGIN",
+  jwt_token,
+    admin:is_admin
 });
 export const logout = () =>({
     type: 'LOGOUT',
-        undefined
+        undefined,
+    admin:false
 });
 export const  startLogin= async(loginFields)=>{
     console.log(loginFields)
