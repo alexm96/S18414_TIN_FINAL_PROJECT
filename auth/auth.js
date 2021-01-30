@@ -36,7 +36,7 @@ passport.use(
                         return done(null, false, { message: `Wrong Password ${nodeEmoji.get("frowning")}` });
                     }
                     else{
-                        const userToReturn={"id":userRow.id,"email":userRow.email,is_admin:true}
+                        const userToReturn={"id":userRow.id,"email":userRow.email,is_admin:!!userRow.is_admin}
                         return done(null, userToReturn, { message: `Login successful ${nodeEmoji.get(
                                 "muscle"
                             )} Redirecting you now!`.toString()});

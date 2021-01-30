@@ -14,7 +14,7 @@ exports.registerUser = async (req, res) => {
   const createdAndUpdatedAt = new Date(new Date().toUTCString());
   if (!valueOFExists) {
     const newPass = await hashPass(newUser.password);
-    let query = `insert into user (id,first_name,last_name,email,phonenumber,address_line1,address_line2,country,postal_code,password,city,tier_id,created_at,updated_at) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    let query = `insert into user (id,first_name,last_name,email,phonenumber,address_line1,address_line2,country,postal_code,password,city,tier_id,created_at,updated_at,is_admin) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     connection
       .query(query, [
         newId,
@@ -31,6 +31,7 @@ exports.registerUser = async (req, res) => {
         1,
         createdAndUpdatedAt,
         createdAndUpdatedAt,
+          false
       ])
       .then(([row, field]) => {
         res.send(

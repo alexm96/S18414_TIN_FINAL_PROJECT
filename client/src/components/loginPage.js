@@ -48,10 +48,11 @@ const LoginPage = ({loginDispatch,history}) => {
       event.preventDefault()
       setLoading(true)
       const result =await startLogin(loginFields)
-      console.log(result)
+
       setLoginResponse(result)
       setLoading(false)
-      await loginDispatch(result.headers["jwt"])
+
+      await loginDispatch(result.headers["jwt"],(result.headers["admin"]==='true'))
     } 
   
   return (
@@ -98,7 +99,7 @@ const LoginPage = ({loginDispatch,history}) => {
 };
 const mapDispatchToProps=(dispatch)=>({
   startLogin:(loginFields)=>dispatch(startLogin(loginFields)),
-   loginDispatch:(jwtToken)=>dispatch(login(jwtToken))
+   loginDispatch:(jwtToken,admin)=>dispatch(login(jwtToken,admin))
 })
 const mapStateToProps=(state)=>({
   getJwt:state.auth.jwt

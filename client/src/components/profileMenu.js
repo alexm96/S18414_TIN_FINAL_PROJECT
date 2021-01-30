@@ -15,7 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import Badge from "@material-ui/core/Badge";
-
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
@@ -46,7 +46,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-const ProfileMenu = ({ history, logoutDispatch }) => {
+const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -78,6 +78,18 @@ const ProfileMenu = ({ history, logoutDispatch }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+          {isAdmin &&
+          <StyledMenuItem
+              onClick={(event) => {
+                  history.push("/adminSite")
+                  handleClose();
+              }}
+          >
+              <ListItemIcon>
+                  <SupervisorAccountIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Admin page" />
+          </StyledMenuItem>}
         <StyledMenuItem
           onClick={(event) => {
             history.push("/profile");
@@ -100,6 +112,7 @@ const ProfileMenu = ({ history, logoutDispatch }) => {
           </ListItemIcon>
           <ListItemText primary="My ads" />
         </StyledMenuItem>
+
         <StyledMenuItem
           onClick={(event) => {
             logoutDispatch();
@@ -115,8 +128,11 @@ const ProfileMenu = ({ history, logoutDispatch }) => {
     </div>
   );
 };
+const mapStateToProps=(state)=>({
+    isAdmin:state.auth.admin
 
+})
 const mapDispatchToProps = (dispatch) => ({
   logoutDispatch: () => dispatch(logout()),
 });
-export default withRouter(connect(undefined, mapDispatchToProps)(ProfileMenu));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileMenu));
