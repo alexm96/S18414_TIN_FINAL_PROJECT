@@ -81,7 +81,7 @@ const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
           {isAdmin &&
           <StyledMenuItem
               onClick={(event) => {
-                  history.push("/adminSite")
+                  history.push("/admin")
                   handleClose();
               }}
           >
