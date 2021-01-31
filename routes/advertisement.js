@@ -59,10 +59,7 @@ router.post(
   createAdvert
 );
 router.use(bodyparser.json());
-router.get("/:adId",async (req,res)=>{
-  const adToReturn=await getSpecificAd(req.params.adId)
-  res.send(adToReturn)
-})
+
 router.get("/", async (req, res, next) => {
   // no auth needed for now , returns miniAds (Title,price, picture)
 
@@ -105,5 +102,8 @@ router.delete("/:adId",passport.authenticate("jwt",{session:false}),async (req,r
 
 
 })
-
+router.get("/specificAd/:adId",async (req,res)=>{
+  const adToReturn=await getSpecificAd(req.params.adId)
+  res.send(adToReturn)
+})
 module.exports = router;

@@ -18,6 +18,7 @@ const AdminPage=({history,getJwt,})=>{
     useEffect(()=>{
         axios.get("/post/adminPost",{headers:{"jwt":getJwt}})
             .then(res => {
+                console.log("loading")
                 setAdminAds(res.data)
             }).catch((error)=>{
                 console.log(error)
@@ -35,13 +36,17 @@ const AdminPage=({history,getJwt,})=>{
         <div>
             <div className={classes.paper}>
                 <Container id={"mini-container"}>
-                    <Table style={style} className={classes.adTable}>
-                        <TableBody>
-                            {adminAds.map((miniAd,index)=>{
-                                return <AdMini key={index} shouldBeDeletable={true}{...miniAd}></AdMini>
-                            })}
-                        </TableBody>
-                    </Table>
+                    {
+                        adminAds.length>0 ?
+
+                        <Table style={style} className={classes.adTable}>
+                            <TableBody>
+                                {adminAds.map((miniAd, index) => {
+                                    return <AdMini key={index} shouldBeDeletable={true}{...miniAd}></AdMini>
+                                })}
+                            </TableBody>
+                        </Table>:<div>Loading!</div>
+                    }
                 </Container>
 
 
