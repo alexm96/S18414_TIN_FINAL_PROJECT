@@ -18,16 +18,10 @@ const AdHolder=({history,getMiniAds,getJwt})=>{
     const classes = useStyles();
     return(
         <div>
+
+
         <div className={classes.paper}>
 
-        </div>
-
-        <div className={classes.paper}>
-
-
-            <Container id={"ad-container"} >
-                <SearchBar/>
-            </Container>
 
             <Container id={"mini-container"}>
 

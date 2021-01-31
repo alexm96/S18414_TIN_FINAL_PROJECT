@@ -22,6 +22,7 @@ const AppRouter=()=>(
                 <Route path="/" component={Home} exact={true} />
             <Route path='/register' component={RegistrationPage} />
             <Route path='/login' component={LoginPage}/>
+                <Route path='/ad' component={AdPage}/>
             <ProtectedRoute path={"/createAd"} component={CreateAd}/>
                 <ProtectedRoute path={"/profile"} component={UserProfile}/>
                 <ProtectedRoute path={"/myAds"} component={UserAdHolder}/>

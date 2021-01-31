@@ -16,6 +16,7 @@ const getUserApplicableAdvertisements = require("../controllers/advertisementCon
     .getUserAdvertisements;
 const nodeEmoji = require("node-emoji");
 const uploadFile = require("../utils/multerStorage");
+const {getSpecificAd} = require("../controllers/advertisementController");
 const {getAllAdvertisements} = require("../controllers/advertisementController");
 const {checkIfAdmin} = require("../middleware/admin");
 const {
@@ -58,6 +59,7 @@ router.post(
   createAdvert
 );
 router.use(bodyparser.json());
+
 router.get("/", async (req, res, next) => {
   // no auth needed for now , returns miniAds (Title,price, picture)
 
@@ -66,7 +68,11 @@ router.get("/", async (req, res, next) => {
   const pageNumber=req.query.pNum;
   const pageSize=req.query.pSize;
   const ads = await getApplicableAdvertisements(searchTerm, city,pageNumber,pageSize);
-  res.send(ads);
+  if(!!ads){
+  res.send(ads)}
+  else{
+    res.status(400).send("Please check you have entered everything correctly!")
+  }
 });
 router.get("/userPosts",passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   // no auth needed for now , returns miniAds (Title,price, picture)
@@ -95,5 +101,9 @@ router.delete("/:adId",passport.authenticate("jwt",{session:false}),async (req,r
 
 
 
+})
+router.get("/specificAd/:adId",async (req,res)=>{
+  const adToReturn=await getSpecificAd(req.params.adId)
+  res.send(adToReturn)
 })
 module.exports = router;

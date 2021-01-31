@@ -5,7 +5,7 @@ import React, {Component} from "react";
 
 const AdminRoute=({getAdmin,getLoggedIn,component:Component,rest})=>(
     <Route {...rest} component={(props)=>(
-        getAdmin && getLoggedIn ? <div> <Component {...props} /></div> : <Redirect to={"/home"}/>
+        getAdmin && getLoggedIn ? <div> <Component {...props} /></div> : <Redirect to={"/"}/>
     )} />
 )
 const mapStateToProps=(state)=>({
