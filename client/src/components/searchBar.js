@@ -39,7 +39,7 @@ const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber,upd
       console.log(Math.round(results.data["maxPage"]/pageSize)+.499999)
       updateMaxPageNumber(Math.round(results.data["maxPage"]/pageSize+.499999))
       updateNumberOfResults(results.data["maxPage"])
-      console.log(results.data["maxPage"])
+
     } else {
       console.log(results.message);
     }

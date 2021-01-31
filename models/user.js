@@ -33,6 +33,13 @@ function inLineUser(someCreateResponse) {
   this.country = someCreateResponse["country"];
   this.city = someCreateResponse["city"];
 }
+function UserFromDb(dbRow){
+  this.firstName=dbRow["first_name"]
+  this.lastName = dbRow["last_name"];
+  this.phoneNumber = dbRow["phonenumber"];
+  this.email = dbRow["email"];
 
+}
 exports.User = User;
 exports.InLineUser = inLineUser;
+exports.UserFromDb=UserFromDb;

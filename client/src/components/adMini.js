@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: 128,
     height: 128,
+    cursor:"pointer"
   },
   img: {
     margin: "auto",
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
   },
   innerData: {
+    cursor:"pointer",
     textAlign: "left",
     width: "43%",
     borderRadius: "30px"
@@ -65,7 +67,9 @@ const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
     /*Todo fix css here, make bottom time component on same horizontal level as image , change font (title), add currency (default zloty)*/
   }
   const classes = useStyles();
+  const handleClick= async ()=>{
 
+  }
   const attemptDelete = async () => {
     await axios
       .delete(`post/${props.id}`, { headers: { jwt:getJwt } })
@@ -90,6 +94,7 @@ const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
                   alt="ad image"
                   src={`images/?id=${props.image.name}`}
                   className={classes.image}
+                  onClick={handleClick}
                 ></img>
               </TableCell>
               <TableCell className={classes.innerData}>
