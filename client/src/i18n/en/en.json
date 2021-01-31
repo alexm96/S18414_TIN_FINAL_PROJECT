@@ -21,6 +21,7 @@
   "termHelpText": "Search for something cool!",
   "termPlaceholder": "Enter a search term",
   "postedAt": "Posted at :",
+  "loading": "Loading",
   "header": {
     "createAd": "Create new ad",
     "profile": {
@@ -59,13 +60,13 @@
     "uploadBlock": "Please upload a picture"
   },
   "adDetails": {
-    "cost": "costs",
-    "location": "Located in",
-    "Category":"Category",
-    "contactDetails": "Contact details",
-    "soldBy": "Sold by",
-    "phoneNumber": "Phone number",
-    "email": "Email"
+    "cost": "Costs:",
+    "location": "Located in:",
+    "Category":"Category:",
+    "contactDetails": "Contact details:",
+    "soldBy": "Sold by:",
+    "phoneNumber": "Phone number:",
+    "email": "Email:"
   }
 
 }

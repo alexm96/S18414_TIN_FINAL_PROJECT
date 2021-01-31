@@ -2,8 +2,10 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "./generalStyles";
 import { Typography } from "@material-ui/core";
-
+import "../../src/i18n/i18n"
+import {useTranslation} from "react-i18next";
 const FullPageAdInner = (props) => {
+    const {t}=useTranslation()
   const classes = useStyles();
   return (
     <div className={classes.paper}>
@@ -27,7 +29,7 @@ const FullPageAdInner = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                       <Typography variant={"h6"}>
-                          Costs: {props.advertisement.price} Zl
+                          {t("adDetails.cost")} {props.advertisement.price} Zl
                       </Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -37,13 +39,13 @@ const FullPageAdInner = (props) => {
                   </Grid>
                   <Grid item xs={12}>
                       <Typography variant={"h7"}>
-                          Located in : {props.advertisement.city} , {props.advertisement.postalCode}
+                          {t("adDetails.location")} {props.advertisement.city} , {props.advertisement.postalCode}
                       </Typography>
                   </Grid>
 
                   <Grid item xs={12}>
                       <Typography variant={"h7"}>
-                          Category: {props.advertisement.category}
+                          {t("adDetails.Category")}{props.advertisement.category}
                       </Typography>
                   </Grid>
               </Grid>
@@ -54,19 +56,19 @@ const FullPageAdInner = (props) => {
       <div className={classes.formBackground} id={"personInfo"}>
           <div className={classes.innerForm} >
           <Typography variant={"h3"}>
-              Contact details
+              {t("adDetails.contactDetails")}
           </Typography>
               <Grid container>
                   <Grid item xs={12}>
                       <Typography variant={"h6"}>
-                          Sold by : {props.user.firstName} {props.user.lastName}
+                          {t("adDetails.soldBy")} {props.user.firstName} {props.user.lastName}
                       </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                      <Typography variant={"h6"}>Email : {props.user.email}</Typography>
+                      <Typography variant={"h6"}>{t("adDetails.email")} {props.user.email}</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                      <Typography variant={"h6"}>Phone Number : {props.user.phoneNumber}</Typography>
+                      <Typography variant={"h6"}>{t("adDetails.phoneNumber")}{props.user.phoneNumber}</Typography>
                   </Grid>
 
               </Grid>

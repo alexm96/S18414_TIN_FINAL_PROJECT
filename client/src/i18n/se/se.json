@@ -21,6 +21,7 @@
   "termHelpText": "Sök efter något häftigt!",
   "termPlaceholder": "Ange ett sökord",
   "postedAt": "Upplagt :",
+  "loading": "sidan laddas",
   "header": {
     "createAd": "Skapa ny annons",
     "profile": {
@@ -60,13 +61,13 @@
     "uploadBlock": "Vänligen ladda upp en bild"
   },
   "adDetails": {
-    "cost": "kostar",
-    "location": "Ligger i",
-    "Category":"Kategori",
+    "cost": "Kostar:",
+    "location": "Ligger i:",
+    "Category":"Kategori:",
     "contactDetails": "Kontaktuppgifter",
-    "soldBy": "Såld av",
-    "phoneNumber": "Telefonnummer",
-    "email": "E-post"
+    "soldBy": "Såld av:",
+    "phoneNumber": "Telefonnummer:",
+    "email": "E-post:"
   }
 
 }
