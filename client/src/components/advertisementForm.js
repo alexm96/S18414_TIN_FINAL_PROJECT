@@ -6,12 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import axios from "axios"
-import {GeneralInput} from "./generalInput";
 import {connect} from "react-redux";
 import useStyles from "./generalStyles"
 import TextField from "@material-ui/core/TextField";
-
-
+import "../../src/i18n/i18n"
+import {useTranslation} from "react-i18next";
 
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -19,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 const CreateAd = ({getJwt,history}) => {
+    const {t}=useTranslation()
     const classes = useStyles();
     const [getTitle,setTitle]=useState("")
     const [getCategory,setCategory]=useState("14")
@@ -26,7 +26,7 @@ const CreateAd = ({getJwt,history}) => {
     const [getImageData,setImageData]=useState(undefined)
     const [getPrice,setPrice]=useState(0.0)
     const [getPossibleCategories,setPossibleCategories]=useState([{"id":"14","name":"Other"}]) // default value
-    const [canSubmit, setCanSubmit] = useState(true);
+    const [canSubmit, setCanSubmit] = useState(false);
     const [isLoading,setLoading]=useState(false)
     const [creationResponse,setCreationResponse]=useState("")
     const serialize=()=>{
@@ -78,7 +78,7 @@ const CreateAd = ({getJwt,history}) => {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
-                    Create a new ad
+                    {t("createAd.heading")}
                 </Typography>
                 <form className={classes.form} noValidate >
                     <Grid container spacing={3}>
@@ -88,11 +88,11 @@ const CreateAd = ({getJwt,history}) => {
                             className="input-field"
                             type="text"
                             name="title"
-                            placeholder="Title"
+                            placeholder={t("createAd.title")}
                             variant="outlined"
                             required
                             fullWidth
-                            helperText={"Enter a title for your ad"}
+                            helperText={t("createAd.titleHelp")}
                             onChange={(event)=>{
                                 setTitle(event.target.value)
                             }}
@@ -109,7 +109,7 @@ const CreateAd = ({getJwt,history}) => {
 
 
                                 }}
-                                helperText="Please select your category"
+                                helperText={t("createAd.categoryHelp")}
                                 variant="outlined"
                             >
                                 {getPossibleCategories.map((category) => (
@@ -125,13 +125,13 @@ const CreateAd = ({getJwt,history}) => {
                             className="input-field"
                             type="text"
                             name="description"
-                            placeholder="Some phenomenal text here"
+                            placeholder={t("createAd.description")}
                             variant="outlined"
                             required
                             fullWidth
                             multiline={true}
                             rows={5}
-                            helperText={"Enter a short description"}
+                            helperText={t("createAd.descriptionHelp")}
                             onChange={(event)=>{
                                 setDescription(event.target.value)
                             }}
@@ -142,11 +142,11 @@ const CreateAd = ({getJwt,history}) => {
                                 className="input-field"
                                 type="number"
                                 name="price"
-                                placeholder="A great price here (in pln)"
+                                placeholder={t("createAd.price")}
                                 variant="outlined"
                                 required
                                 fullWidth
-                                helperText={"Enter a price"}
+                                helperText={t("createAd.priceHelp")}
                                 onChange={(event)=>{
                                     setPrice(event.target.value)
                                 }}
@@ -162,18 +162,19 @@ const CreateAd = ({getJwt,history}) => {
                             onChange={ ( async event => {
                                 event.preventDefault()
                                 setImageData(event.target.files[0])
+                                setCanSubmit(true)
                             })}
 
                         />
                         <label htmlFor="raised-button-file">
                             <Button  variant="outlined" component="span" className={classes.button} >
-                                Upload a picture
+                                {t("createAd.upload")}
                             </Button>
                         </label>
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <Typography component="p" >
-                                {getImageData ? getImageData.name : "No file uploaded"}
+                                {getImageData ? getImageData.name : t("createAd.uploadHelp")}
                             </Typography>
                         </Grid>
                         <Button
@@ -186,7 +187,7 @@ const CreateAd = ({getJwt,history}) => {
                             onClick={createAd}
                             aria-label={"title"}
                         >
-                            Create my ad!
+                            {!canSubmit?t("createAd.uploadBlock"):t("createAd.createButton")}
                         </Button>
 
                     </Grid>

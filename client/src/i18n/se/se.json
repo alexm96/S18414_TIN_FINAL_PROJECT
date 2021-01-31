@@ -1,0 +1,73 @@
+{
+  "welcome": "Hitta något häftigt!",
+  "searchResults": "Vi hittade {{results}} resultat för din sökning",
+  "signUp": "Bli Medlem",
+  "firstName": "Ditt förnamn",
+  "lastName": "Ditt efternamn",
+  "email": "Din email",
+  "phoneNumber": "Ditt telefonnummer",
+  "addressLine1": "Adress Linje 1",
+  "addressLine2": "Adress Linje 2",
+  "country": "Land",
+  "postalCode": "Postnummer",
+  "city": "Stad",
+  "password": "Lösenord",
+  "confirmPassword": "Bekräfta lösenord",
+  "login": "Logga in",
+  "search": "Söka!",
+  "searchBlock": "Ange mer än fyra bokstäver",
+  "cityHelpText": "I vilken stad befinner du dig",
+  "cityPlaceholder": "Din stad här",
+  "termHelpText": "Sök efter något häftigt!",
+  "termPlaceholder": "Ange ett sökord",
+  "postedAt": "Upplagt :",
+  "loading": "sidan laddas",
+  "header": {
+    "createAd": "Skapa ny annons",
+    "profile": {
+      "title": "Min profil",
+      "admin": "Administratörssida",
+      "information": "Min information",
+      "ads": "Mina annonser",
+      "logout": "Logga ut"
+    }
+  },
+  "personalInfo": {
+    "title": "Din personliga information",
+    "firstName": "Ditt förnamn",
+    "lastName": "Ditt efternamn",
+    "email": "Din email",
+    "phoneNumber": "Ditt telefonnummer",
+    "addressLine1": "Adress Linje 1",
+    "addressLine2": "Adress Linje 2",
+    "country": "Land",
+    "postalCode": "Postnummer",
+    "city": "Stad",
+
+    "changeInfoText": "Ändra min info tack"
+  },
+  "createAd": {
+    "heading": "Skapa ny annons",
+    "title": "Titel",
+    "titleHelp": "Ange en titel för din annons",
+    "categoryHelp": "Välj din kategori",
+    "description": "Någon fenomenal text här",
+    "descriptionHelp": "Ange en kort beskrivning",
+    "price": "Ett bra pris här (i pln)",
+    "priceHelp": "ange ett pris",
+    "upload": "Ladda upp en bild",
+    "createButton": "Skapa min annons!",
+    "uploadHelp": "Ingen fil uppladdad",
+    "uploadBlock": "Vänligen ladda upp en bild"
+  },
+  "adDetails": {
+    "cost": "Kostar:",
+    "location": "Ligger i:",
+    "Category":"Kategori:",
+    "contactDetails": "Kontaktuppgifter",
+    "soldBy": "Såld av:",
+    "phoneNumber": "Telefonnummer:",
+    "email": "E-post:"
+  }
+
+}

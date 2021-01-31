@@ -5,8 +5,10 @@ import {useLocation} from "react-router-dom";
 
 import useStyles from "./generalStyles"
 import FullPageAdInner from "./fullPageAdInner";
-
+import "../../src/i18n/i18n"
+import {useTranslation} from "react-i18next";
 const AdPage=(props)=>{
+    const {t}=useTranslation()
     const classes=useStyles()
     const [adDetails,setAdDetails]=useState({})
     const location = useLocation();
@@ -22,7 +24,7 @@ const AdPage=(props)=>{
     },[location])
     return (
         <div className={classes.paper}>
-            {!(!!adDetails["advertisement"]) ? <p>Loading</p>:
+            {!(!!adDetails["advertisement"]) ? <p>{t("loading")}</p>:
             <FullPageAdInner {...adDetails}/>
 }
         </div>

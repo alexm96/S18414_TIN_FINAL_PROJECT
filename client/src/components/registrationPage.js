@@ -9,11 +9,12 @@ import axios from "axios"
 import {GeneralInput} from "./generalInput";
 import {connect} from "react-redux";
 import useStyles from "./generalStyles"
-
+import "../../src/i18n/i18n"
+import { useTranslation } from 'react-i18next';
 const phRegex= "\+[0-9]+"
 
 const RegistrationPage = ({getJwt}) => {
-
+  const {t}=useTranslation()
   const classes = useStyles();
   const generateEmptyFields = () => {
     return {
@@ -85,63 +86,63 @@ for (const [key, value] of Object.entries(registrationFields)){
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign up
+          {t("signUp")}
         </Typography>
         <form className={classes.form} noValidate >
           <Grid container spacing={2}>
             <GeneralInput
               name="first_name"
-              placeholder="Your first name"
+              placeholder={t("firstName")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
               name="last_name"
-              placeholder="Your last name"
+              placeholder={t("lastName")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
               name="email"
-              placeholder="Your email"
+              placeholder={t("email")}
               type="email"
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput name="phonenumber" type ="tel" placeholder={"Phone number"} updateFunction={onUpdate} pattern={phRegex}></GeneralInput>
             <GeneralInput
               name="address_line1"
-              placeholder="Address line 1"
+              placeholder={t("addressLine1")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
               name="address_line2"
-              placeholder="Address line 2"
+              placeholder={t("addressLine2")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
               name="country"
-              placeholder="Country"
+              placeholder={t("country")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
               name="postal_code"
-              placeholder="postal code"
+              placeholder={t("postalCode")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <GeneralInput
               name="city"
-              placeholder="city"
+              placeholder={t("city")}
               updateFunction={onUpdate}
             ></GeneralInput>
             <Grid item xs={12} sm={6}>
             </Grid>
             <GeneralInput
               name="password"
-              placeholder="password"
+              placeholder={t("password")}
               updateFunction={onUpdate}
               type="password"
             ></GeneralInput>
             <GeneralInput
               name="confirmPassword"
-              placeholder="confirm password"
+              placeholder={t("confirmPassword")}
               updateFunction={onUpdate}
               type="password"
 
@@ -155,7 +156,7 @@ for (const [key, value] of Object.entries(registrationFields)){
               className={classes.submit}
               onClick={register}
             >
-              Sign Up
+              {t("signUp")}
             </Button>
 
           </Grid>

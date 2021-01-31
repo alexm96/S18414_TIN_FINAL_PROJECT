@@ -8,12 +8,14 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import useStyles from "./generalStyles";
-
+import "../../src/i18n/i18n"
+import {useTranslation} from "react-i18next";
 import { connect } from "react-redux";
 import { set, update, updateDetails } from "../actions/userDetails";
 import axios from "axios";
 
-const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
+const UserProfile = ({  getJwt, set,  }) => {
+  const {t}=useTranslation()
   const classes = useStyles();
   const [userData, setUserData] = useState({
     firstName: "",
@@ -58,7 +60,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Your personal information
+            {t("personalInfo.title")}
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
@@ -71,7 +73,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Your first name"}
+                  helperText={t("personalInfo.firstName")}
                   value={userData.firstName}
                 />
               </Grid>
@@ -84,7 +86,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Your last name"}
+                  helperText={t("personalInfo.lastName")}
                   value={userData.lastName}
                 />
               </Grid>
@@ -97,7 +99,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Your email"}
+                  helperText={t("personalInfo.email")}
                   value={userData.email}
                 />
               </Grid>
@@ -110,7 +112,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Your phone number"}
+                  helperText={t("personalInfo.phoneNumber")}
                   value={userData.phoneNumber}
                 />
               </Grid>
@@ -123,7 +125,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Address line 1"}
+                  helperText={t("personalInfo.addressLine1")}
                   value={userData.addressLine1}
                 />
               </Grid>
@@ -135,7 +137,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Address line 2"}
+                  helperText={t("personalInfo.addressLine2")}
                   value={userData.addressLine2}
                 />
               </Grid>
@@ -147,7 +149,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Country"}
+                  helperText={t("personalInfo.country")}
                   value={userData.country}
                 />
               </Grid>
@@ -160,7 +162,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"City"}
+                  helperText={t("personalInfo.city")}
                   value={userData.city}
                 />
               </Grid>
@@ -173,7 +175,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                   required
                   fullWidth
                   onChange={updateValues}
-                  helperText={"Postal code"}
+                  helperText={t("personalInfo.postalCode")}
                   value={userData.postalCode}
                 />
               </Grid>
@@ -185,7 +187,7 @@ const UserProfile = ({ history, getJwt, set, getUserDetails, update }) => {
                 className={classes.submit}
                 onClick={tryUpdate}
               >
-                Change my info please
+                {t("personalInfo.changeInfoText")}
               </Button>
             </Grid>
           </form>

@@ -6,15 +6,16 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import StorefrontIcon from "@material-ui/icons/Storefront";
+import "../../src/i18n/i18n"
+import {useTranslation} from "react-i18next";
 
-import SendIcon from "@material-ui/icons/Send";
 import PersonIcon from "@material-ui/icons/Person";
 
 import { logout } from "../actions/auth";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import Badge from "@material-ui/core/Badge";
+
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 const StyledMenu = withStyles({
   paper: {
@@ -47,6 +48,7 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
+    const {t}= useTranslation()
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -68,7 +70,7 @@ const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
         onClick={handleClick}
       >
           {/*todo add badge here linked to message amount (also implement ad messaging)*/}
-          <PersonIcon /> My profile
+          <PersonIcon /> {t("header.profile.title")}
 
       </Button>
       <StyledMenu
@@ -88,7 +90,7 @@ const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
               <ListItemIcon>
                   <SupervisorAccountIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary="Admin page" />
+              <ListItemText primary={t("header.profile.admin")} />
           </StyledMenuItem>}
         <StyledMenuItem
           onClick={(event) => {
@@ -99,7 +101,7 @@ const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
           <ListItemIcon>
             <PersonIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="My information" />
+          <ListItemText primary={t("header.profile.information")} />
         </StyledMenuItem>
         <StyledMenuItem
           onClick={(event) => {
@@ -110,7 +112,7 @@ const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
           <ListItemIcon>
             <StorefrontIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="My ads" />
+          <ListItemText primary={t("header.profile.ads")}/>
         </StyledMenuItem>
 
         <StyledMenuItem
@@ -122,7 +124,7 @@ const ProfileMenu = ({ history, logoutDispatch,isAdmin }) => {
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          <ListItemText primary={t("header.profile.logout")} />
         </StyledMenuItem>
       </StyledMenu>
     </div>
