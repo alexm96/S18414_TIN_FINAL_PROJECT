@@ -94,7 +94,7 @@ const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
               </TableCell>
               <TableCell className={classes.innerData}>
                 <Typography property={"h3"}>{props.title}</Typography>
-                <Typography>Some info here </Typography>
+
               </TableCell>
               <TableCell
                 className={classes.innerData}

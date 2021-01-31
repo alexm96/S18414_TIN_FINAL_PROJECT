@@ -28,21 +28,27 @@ const Home=({history,getMiniAds})=>{
     const [pageNumber,setPageNumber]=useState(1)
     const [pageSize,setPageSize]=useState(5)
     const [maxPages,setMaxPages]=useState(100000)
+    const [numberOfResults,setNumberOfResults]=useState(-1)
     return (
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Find something cool!
         </Typography>
         <Container id={"search-container"}>
-          <SearchBar pageNumber={pageNumber} pageSize={pageSize} updateMaxPageNumber={setMaxPageSize} />
+          <SearchBar pageNumber={pageNumber} pageSize={pageSize} updateMaxPageNumber={setMaxPageSize} updateNumberOfResults={setNumberOfResults} />
         </Container>
 
+          {numberOfResults>=0&& getMiniAds.length>0 &&
+
+          <Typography variant={"h5"} className={classes["search-results"]}> We found {numberOfResults} results for your search!</Typography>
+
+          }
         <Container id={"mini-container"}>
-          <AdHolder />
+
+            <AdHolder />
         </Container>
           {getMiniAds.length>0 &&
           <div>
-
           <Button onClick={handleDecrement}><ArrowBackIcon/> </Button>
           <a>{pageNumber}</a>
           <Button onClick={handleIncrement}><ArrowForwardIcon/> </Button>

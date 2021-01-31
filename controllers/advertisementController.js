@@ -140,7 +140,7 @@ exports.getAdvertisements = async (searchTerm, city,pageNumber,pageSize) => {
     });
     console.log(numberQueryString)
     const numberOfAds=numberRows[0]["total_ads"]
-    const maxPages=Math.round((numberOfAds/pageSize)+.4999)
+    const maxPages=numberOfAds
     console.log(numberOfAds)
     return {
       "adverts":adverts,

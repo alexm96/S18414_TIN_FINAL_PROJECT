@@ -11,7 +11,7 @@ import { InputAdornment } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
 
-const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber}) => {
+const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber,updateNumberOfResults}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCity, setSearchCity] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
@@ -36,7 +36,9 @@ const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber}) =
     const results = await getSearchItems(searchFields,pageNumber,pageSize);
     if (results.status === 200) {
       searchDispatch(results.data["adverts"]);
-      updateMaxPageNumber(results.data["maxPage"])
+      console.log(Math.round(results.data["maxPage"]/pageSize)+.499999)
+      updateMaxPageNumber(Math.round(results.data["maxPage"]/pageSize+.499999))
+      updateNumberOfResults(results.data["maxPage"])
       console.log(results.data["maxPage"])
     } else {
       console.log(results.message);

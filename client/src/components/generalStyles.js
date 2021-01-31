@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     }
     ,icons:{
         fill:"grey"
+    },
+    "search-results":{
+        paddingTop:"15px"
+
     }
 }));
 export default useStyles
