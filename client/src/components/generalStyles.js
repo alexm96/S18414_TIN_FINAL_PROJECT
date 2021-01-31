@@ -34,6 +34,21 @@ const useStyles = makeStyles((theme) => ({
     "search-results":{
         paddingTop:"15px"
 
+    },
+    formBackground:{
+        backgroundColor:"whitesmoke",
+        borderRadius:"30px",
+        paddingTop:"15px",
+        paddingBottom:"15px",
+        width:"600px",
+        marginTop:"10px"
+
+    },
+    innerForm:{
+        backgroundColor:"white",
+        borderRadius:"30px",
+        margin:"15px 15px 15px 15px",
+        textAlign:"center"
     }
 }));
 export default useStyles

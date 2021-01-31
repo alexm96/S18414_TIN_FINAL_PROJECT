@@ -7,7 +7,7 @@ function Image(rawReq) {
 function ImageFromDB(row) {
   this.name = row["name"];
   this.type = row["type"];
-  this.filePath = row["filePath"];
+
 }
 exports.Image = Image;
 exports.ImageFromDb = ImageFromDB;

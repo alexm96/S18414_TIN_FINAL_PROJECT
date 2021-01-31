@@ -68,7 +68,7 @@ const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
   }
   const classes = useStyles();
   const handleClick= async ()=>{
-
+      history.push({pathname:"/ad",state:{adId:props.id}})
   }
   const attemptDelete = async () => {
     await axios
