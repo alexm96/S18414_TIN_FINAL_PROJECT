@@ -97,7 +97,7 @@ const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
                   onClick={handleClick}
                 ></img>
               </TableCell>
-              <TableCell className={classes.innerData}>
+              <TableCell className={classes.innerData} onClick={handleClick}>
                 <Typography property={"h3"}>{props.title}</Typography>
 
               </TableCell>

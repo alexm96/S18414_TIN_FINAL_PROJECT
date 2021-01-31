@@ -21,7 +21,6 @@ const AdPage=(props)=>{
 
     },[location])
     return (
-
         <div className={classes.paper}>
             {!(!!adDetails["advertisement"]) ? <p>Loading</p>:
             <FullPageAdInner {...adDetails}/>
