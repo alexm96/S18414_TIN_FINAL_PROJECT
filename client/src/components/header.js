@@ -10,7 +10,12 @@ import { checkLoginStatus } from "../actions/header";
 import { withRouter } from "react-router";
 import { search } from "../actions/search";
 import ProfileMenu from "./profileMenu";
-
+import "../../src/i18n/i18n"
+import { useTranslation } from 'react-i18next';
+import ReactCountryFlag from "react-country-flag"
+import i18n from "../../src/i18n/i18n";
+import methods from "emoji-flags"
+import Switch from "@material-ui/core/Switch";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -33,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Header = ({ getLoggedIn, history, logoutDispatch, searchDispatch }) => {
+
+  const { t } = useTranslation();
   const [isLoggedIn, setLoggedIn] = useState(getLoggedIn);
   const sendMeHome = (event) => {
     event.preventDefault();
@@ -48,11 +55,41 @@ const Header = ({ getLoggedIn, history, logoutDispatch, searchDispatch }) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+
           <Typography variant="h6" className={classes.title}>
             <span onClick={sendMeHome} className={classes.pointer}>
               <a className={classes.boldText}>Fau</a>lx
             </span>
           </Typography>
+          <ReactCountryFlag countryCode={"SE"}
+                            svg
+                            cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                            cdnSuffix="svg"
+                            title="SE"/>
+          <Switch
+              defaultChecked
+              color="default"
+              inputProps={{ 'aria-label': 'checkbox with default color' }}
+              onChange={(e)=>{
+                if(e.target.checked){
+                  //english
+                  i18n.changeLanguage("en").then(()=>{
+                    console.log("ok")
+                  })
+                }
+                else{
+                  //se
+                  i18n.changeLanguage("se").then(()=>{
+                    console.log("ok")
+                  })
+                }
+              }}
+          />
+          <ReactCountryFlag countryCode={"CA"}
+              svg
+                            cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                            cdnSuffix="svg"
+                            title="CA"/>
           <Button
             color="inherit"
             className={getLoggedIn ? classes["should-be-hidden"] : ""}
@@ -61,7 +98,7 @@ const Header = ({ getLoggedIn, history, logoutDispatch, searchDispatch }) => {
               history.push("/register");
             }}
           >
-            Register
+            {t("signUp")}
           </Button>
           <Button
             color="inherit"
@@ -71,7 +108,7 @@ const Header = ({ getLoggedIn, history, logoutDispatch, searchDispatch }) => {
               history.push("/createAd");
             }}
           >
-            Create new ad
+            {t("header.createAd")}
           </Button>
           <div className={!getLoggedIn ? classes["should-be-hidden"] : ""}>
             <ProfileMenu />
@@ -84,7 +121,7 @@ const Header = ({ getLoggedIn, history, logoutDispatch, searchDispatch }) => {
               history.push("/login");
             }}
           >
-            Login
+            {t("login")}
           </Button>
         </Toolbar>
       </AppBar>

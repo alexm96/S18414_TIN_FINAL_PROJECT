@@ -1,0 +1,71 @@
+{
+  "welcome": "Find something cool!",
+  "searchResults": "We found {{results}} results for your search",
+  "signUp": "Sign up",
+  "firstName": "Your first name",
+  "lastName": "Your last name",
+  "email": "Your email",
+  "phoneNumber": "Your phone number",
+  "addressLine1": "Address line 1",
+  "addressLine2": "Address line 2",
+  "country": "Country",
+  "postalCode": "Postal code",
+  "city": "City",
+  "password": "Password",
+  "confirmPassword": "Confirm password",
+  "login": "Login",
+  "search": "Search!",
+  "searchBlock": "Enter more than 4 letters",
+  "cityHelpText": "Which city are you looking in ?",
+  "cityPlaceholder": "Your city here",
+  "termHelpText": "Search for something cool!",
+  "termPlaceholder": "Enter a search term",
+  "postedAt": "Posted at :",
+  "header": {
+    "createAd": "Create new ad",
+    "profile": {
+      "title": "My profile",
+      "admin": "Admin page",
+      "information": "My information",
+      "ads": "My ads",
+      "logout": "Logout"
+    }
+  },
+  "personalInfo": {
+    "title": "Your personal information",
+    "firstName": "Your first name",
+    "lastName": "Your last name",
+    "email": "Your email",
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "country": "Country",
+    "postalCode": "Postal code",
+    "city": "City",
+    "phoneNumber": "Your phone number",
+    "changeInfoText": "Change my info please"
+  },
+  "createAd": {
+    "heading": "Create a new ad",
+    "title": "Title",
+    "titleHelp": "Enter a title for your ad",
+    "categoryHelp": "Please select your category",
+    "description": "Some phenomenal text here",
+    "descriptionHelp": "Enter a short description",
+    "price": "A great price here (in pln)",
+    "priceHelp": "enter a price",
+    "upload": "Upload a picture",
+    "createButton": "Create my ad!",
+    "uploadHelp": "No file uploaded",
+    "uploadBlock": "Please upload a picture"
+  },
+  "adDetails": {
+    "cost": "costs",
+    "location": "Located in",
+    "Category":"Category",
+    "contactDetails": "Contact details",
+    "soldBy": "Sold by",
+    "phoneNumber": "Phone number",
+    "email": "Email"
+  }
+
+}

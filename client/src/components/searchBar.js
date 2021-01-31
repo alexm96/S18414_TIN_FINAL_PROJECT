@@ -8,10 +8,12 @@ import useStyles from "./generalStyles";
 import AddLocationOutlinedIcon from '@material-ui/icons/AddLocationOutlined';
 import { getSearchItems, search } from "../actions/search";
 import { InputAdornment } from "@material-ui/core";
-
+import "../../src/i18n/i18n"
+import { useTranslation } from 'react-i18next';
 import SearchIcon from "@material-ui/icons/Search";
 
 const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber,updateNumberOfResults}) => {
+  const {t}=useTranslation()
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCity, setSearchCity] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
@@ -54,11 +56,11 @@ const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber,upd
               className="input-field"
               type="text"
               name="search-term"
-              placeholder="Enter a search term"
+              placeholder={t("termPlaceholder")}
               variant="outlined"
               required
               fullWidth
-              helperText={"Search for something cool!"}
+              helperText={t("termHelpText")}
               onChange={(event) => {
                 event.preventDefault();
                 setSearchTerm(event.target.value);
@@ -77,10 +79,10 @@ const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber,upd
               className="input-field"
               type="text"
               name="area"
-              placeholder="Your city here "
+              placeholder={t("cityPlaceholder")}
               variant="outlined"
               fullWidth
-              helperText={"Which city are you looking in ?"}
+              helperText={t("cityHelpText")}
               onChange={(event) => {
                 event.preventDefault();
                 setSearchCity(event.target.value);
@@ -104,7 +106,7 @@ const SearchBar = ({ searchDispatch,pageNumber,pageSize ,updateMaxPageNumber,upd
               disabled={!canSubmit}
               onClick={searchForAdverts}
             >
-              {canSubmit ? "Search" : "Enter more than 4 letters"}
+              {canSubmit ? t("search") : t("searchBlock")}
             </Button>
           </Grid>
         </Grid>

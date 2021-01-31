@@ -11,7 +11,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from "@material-ui/core/Button";
 import {connect} from "react-redux";
 import axios from "axios";
-
+import { InputAdornment } from "@material-ui/core";
+import "../../src/i18n/i18n"
+import {useTranslation} from "react-i18next";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -62,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
+  const {t}=useTranslation()
   const history=useHistory()
   {
     /*Todo fix css here, make bottom time component on same horizontal level as image , change font (title), add currency (default zloty)*/
@@ -119,7 +122,7 @@ const AdMini = ({getJwt,shouldBeDeletable,...props}) => {
         </Table>
         <Typography property={"p"}>
           {" "}
-          {"Posted at :" + new Date(props.postedAt).toLocaleDateString()}
+          {t("postedAt") + new Date(props.postedAt).toLocaleDateString()}
         </Typography>
       </TableCell>
     </TableRow>
